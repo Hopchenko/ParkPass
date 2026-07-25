@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Parkpass — Sweden's national parks checklist",
+    "description": "Track and check off all 31 Swedish national parks. Collect a pin for every park you visit."
+  },
+  "tabs": {
+    "parks": "Parks",
+    "board": "Pin board",
+    "you": "You"
+  },
+  "parks": {
+    "title": "Parkpass",
+    "pinnedCount": "{count} / 31 pinned",
+    "searchPlaceholder": "Search parks or regions…",
+    "chipAll": "All 31",
+    "chipPinned": "Pinned",
+    "chipTodo": "Not yet",
+    "meta": "{region} · Est. {year} · {area} km²",
+    "noResults": "No parks match — try \"Lapland\" or \"Skåne\"."
+  },
+  "detail": {
+    "back": "Parks",
+    "est": "Est. {year}",
+    "area": "{area} km²",
+    "pinIt": "I've been here — pin it!",
+    "pinned": "Pinned {date}",
+    "undo": "Undo",
+    "official": "Plan a trip on the official site ↗",
+    "disclaimer": "Unofficial tracker — not affiliated with Naturvårdsverket."
+  },
+  "board": {
+    "title": "Pin board",
+    "count": "{count} / 31"
+  },
+  "you": {
+    "title": "Your expedition",
+    "of31": "/ 31 parks pinned",
+    "toGo": "{count, plural, one {# park} other {# parks}} to go — the diploma is waiting.",
+    "done": "All 31! Time to claim that diploma. 🎉",
+    "diplomaTitle": "The diploma awaits 🏅",
+    "diplomaBody": "Visit all 31 and Naturvårdsverket will send you a diploma signed by the Director General. Really.",
+    "diplomaLink": "About the official checklist ↗",
+    "syncTitle": "Keep your pins safe",
+    "syncBody": "Your progress lives on this device for now. Sign in to sync it everywhere.",
+    "signIn": "Sign in — coming soon",
+    "honor": "Unofficial tracker · Visits are on your honor 🤝",
+    "language": "Language"
+  }
+}

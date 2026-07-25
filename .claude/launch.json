@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "parkpass-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "parkpass-web", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
