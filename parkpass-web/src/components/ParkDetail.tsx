@@ -136,7 +136,7 @@ export function ParkDetail({ park }: { park: Park }) {
         )}
 
         <a
-          href={officialUrl(park.slug)}
+          href={officialUrl(park.slug, locale)}
           target="_blank"
           rel="noopener noreferrer"
           className="flex min-h-[48px] w-full items-center justify-center rounded-full px-1 font-heading text-[14px] text-accent no-underline hover:bg-accent/10 active:bg-accent/18"

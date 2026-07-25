@@ -34,8 +34,72 @@ export const COLORS = [
   { main: "#56633f", light: "#ccdbb2", dark: "#272e1b" },
 ] as const;
 
-export function officialUrl(slug: string): string {
-  return `https://www.sverigesnationalparker.se/park/${slug}-nationalpark/`;
+/**
+ * Path segments on sverigesnationalparker.se, per locale. Swedish uses genitive
+ * forms ("tivedens") and English doesn't, and the three parks with Sámi names
+ * concatenate both — so these are transcribed from the official site's own
+ * listings rather than derived. Verified with scripts/check-official-links.sh.
+ */
+const OFFICIAL_SLUGS: Record<string, { sv: string; en: string }> = {
+  abisko: { sv: "abisko-nationalpark", en: "abisko-national-park" },
+  vadvetjakka: { sv: "vadvetjakka-nationalpark", en: "vadvetjakka-national-park" },
+  "stora-sjofallet": {
+    sv: "stora-sjofalletsstuor-muorkke-nationalpark",
+    en: "stora-sjofalletstuor-muorkke-national-park",
+  },
+  padjelanta: {
+    sv: "padjelantabadjelannda-nationalpark",
+    en: "padjelantabadjelannda-national-park",
+  },
+  sarek: { sv: "sarek-nationalpark", en: "sarek-national-park" },
+  muddus: { sv: "muddusmuttos-nationalpark", en: "muddusmuttos-national-park" },
+  pieljekaise: { sv: "pieljekaise-nationalpark", en: "pieljekaise-national-park" },
+  "haparanda-skargard": {
+    sv: "haparanda-skargards-nationalpark",
+    en: "haparanda-skargard-national-park",
+  },
+  bjornlandet: { sv: "bjornlandets-nationalpark", en: "bjornlandet-national-park" },
+  skuleskogen: { sv: "skuleskogens-nationalpark", en: "skuleskogen-national-park" },
+  sonfjallet: { sv: "sonfjallets-nationalpark", en: "sonfjallet-national-park" },
+  tofsingdalen: { sv: "tofsingdalens-nationalpark", en: "tofsingdalen-national-park" },
+  fulufjallet: { sv: "fulufjallets-nationalpark", en: "fulufjallet-national-park" },
+  hamra: { sv: "hamra-nationalpark", en: "hamra-national-park" },
+  farnebofjarden: {
+    sv: "farnebofjardens-nationalpark",
+    en: "farnebofjarden-national-park",
+  },
+  garphyttan: { sv: "garphyttans-nationalpark", en: "garphyttan-national-park" },
+  tyresta: { sv: "tyresta-nationalpark", en: "tyresta-national-park" },
+  angso: { sv: "angso-nationalpark", en: "angso-national-park" },
+  namdoskargarden: {
+    sv: "namdoskargardens-nationalpark",
+    en: "namdoskargarden-national-park",
+  },
+  "norra-kvill": { sv: "norra-kvills-nationalpark", en: "norra-kvill-national-park" },
+  "store-mosse": { sv: "store-mosse-nationalpark", en: "store-mosse-national-park" },
+  "bla-jungfrun": { sv: "bla-jungfrun-nationalpark", en: "bla-jungfrun-national-park" },
+  "gotska-sandon": { sv: "gotska-sandon", en: "gotska-sandon-national-park" },
+  asnen: { sv: "asnens-nationalpark", en: "asnen-national-park" },
+  stenshuvud: { sv: "stenshuvuds-nationalpark", en: "stenshuvud-national-park" },
+  "dalby-soderskog": {
+    sv: "dalby-soderskog-nationalpark",
+    en: "dalby-soderskog-national-park",
+  },
+  soderasen: { sv: "soderasens-nationalpark", en: "soderasen-national-park" },
+  kosterhavet: { sv: "kosterhavets-nationalpark", en: "kosterhavet-national-park" },
+  tiveden: { sv: "tivedens-nationalpark", en: "tiveden-national-park" },
+  djuro: { sv: "djuro-nationalpark", en: "djuro-national-park" },
+  tresticklan: { sv: "tresticklans-nationalpark", en: "tresticklan-national-park" },
+};
+
+const OFFICIAL_BASE = "https://www.sverigesnationalparker.se";
+
+export function officialUrl(slug: string, locale: "sv" | "en"): string {
+  const official = OFFICIAL_SLUGS[slug];
+  if (!official) return `${OFFICIAL_BASE}/${locale === "sv" ? "sv" : "en"}`;
+  return locale === "sv"
+    ? `${OFFICIAL_BASE}/sv/upptack-nationalparkerna/${official.sv}`
+    : `${OFFICIAL_BASE}/en/parks/${official.en}`;
 }
 
 export const PARKS: Park[] = [
