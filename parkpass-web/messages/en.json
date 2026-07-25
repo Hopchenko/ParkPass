@@ -42,12 +42,7 @@
     "diplomaLink": "About the official checklist ↗",
     "syncTitle": "Keep your pins safe",
     "syncBody": "Your progress lives on this device for now. Sign in to sync it everywhere.",
-    "signInGoogle": "Continue with Google",
-    "emailPlaceholder": "you@example.com",
-    "signInEmail": "Send me a sign-in link",
-    "magicLinkSent": "Check your email for a sign-in link.",
-    "signedInAs": "Signed in as {email}.",
-    "signOut": "Sign out",
+    "signIn": "Sign in — coming soon",
     "honor": "Unofficial tracker · Visits are on your honor 🤝",
     "language": "Language"
   }

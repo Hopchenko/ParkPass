@@ -1,105 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PARK_COUNT } from "@/data/parks";
-import { useAuth } from "@/lib/auth";
-import type { Locale } from "@/i18n/routing";
 import { useVisited } from "@/lib/visited";
 
 const OFFICIAL_CHECKLIST_URL =
   "https://www.sverigesnationalparker.se/inspiration-och-kunskap/krysslista";
-
-function SyncCard() {
-  const t = useTranslations("you");
-  const locale = useLocale() as Locale;
-  const { session, loading, signInWithGoogle, signInWithMagicLink, signOut } =
-    useAuth();
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col gap-2.5 rounded-[32px] bg-surface px-5 py-[18px]">
-        <div className="h-4 w-40 animate-pulse rounded-full bg-neutral-300" />
-        <div className="h-3 w-full animate-pulse rounded-full bg-neutral-300" />
-      </div>
-    );
-  }
-
-  if (session) {
-    return (
-      <div className="flex flex-col gap-2.5 rounded-[32px] bg-surface px-5 py-[18px]">
-        <div className="text-[15px] font-extrabold">{t("syncTitle")}</div>
-        <div className="text-[13.5px] leading-[1.5] text-neutral-700">
-          {t("signedInAs", { email: session.user.email ?? "" })}
-        </div>
-        <button
-          onClick={() => signOut()}
-          className="mt-1 flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-full border border-divider font-heading text-[14px] text-ink"
-        >
-          {t("signOut")}
-        </button>
-      </div>
-    );
-  }
-
-  async function handleGoogle() {
-    setError(null);
-    const { error } = await signInWithGoogle(locale);
-    if (error) setError(error);
-  }
-
-  async function handleMagicLink(e: FormEvent) {
-    e.preventDefault();
-    setBusy(true);
-    setError(null);
-    const { error } = await signInWithMagicLink(email, locale);
-    setBusy(false);
-    if (error) setError(error);
-    else setSent(true);
-  }
-
-  return (
-    <div className="flex flex-col gap-2.5 rounded-[32px] bg-surface px-5 py-[18px]">
-      <div className="text-[15px] font-extrabold">{t("syncTitle")}</div>
-      <div className="text-[13.5px] leading-[1.5] text-neutral-700">
-        {t("syncBody")}
-      </div>
-      <button
-        onClick={handleGoogle}
-        className="mt-1 flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-full bg-accent font-heading text-[14px] text-ground hover:bg-accent-600 active:bg-accent-700"
-      >
-        {t("signInGoogle")}
-      </button>
-      {sent ? (
-        <div className="text-[13px] text-sage-700">{t("magicLinkSent")}</div>
-      ) : (
-        <form onSubmit={handleMagicLink} className="flex flex-col gap-2">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t("emailPlaceholder")}
-            className="min-h-[44px] w-full rounded-full border border-divider bg-ground px-4 text-[14px] caret-accent placeholder:text-neutral-500 focus-visible:border-accent focus-visible:outline-offset-0"
-          />
-          <button
-            type="submit"
-            disabled={busy}
-            className="flex min-h-[44px] w-full cursor-pointer items-center justify-center rounded-full border border-divider font-heading text-[14px] text-ink disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {t("signInEmail")}
-          </button>
-        </form>
-      )}
-      {error && <div className="text-[12.5px] text-accent-700">{error}</div>}
-    </div>
-  );
-}
 
 export function Profile() {
   const t = useTranslations("you");
@@ -146,7 +53,18 @@ export function Profile() {
         </a>
       </div>
 
-      <SyncCard />
+      <div className="flex flex-col gap-2.5 rounded-[32px] bg-surface px-5 py-[18px]">
+        <div className="text-[15px] font-extrabold">{t("syncTitle")}</div>
+        <div className="text-[13.5px] leading-[1.5] text-neutral-700">
+          {t("syncBody")}
+        </div>
+        <button
+          disabled
+          className="mt-1 flex min-h-[48px] w-full items-center justify-center rounded-full border border-divider font-heading text-[14px] text-ink opacity-60"
+        >
+          {t("signIn")}
+        </button>
+      </div>
 
       <div className="flex items-center justify-center gap-2 text-[12.5px] text-neutral-600">
         <span>{t("language")}:</span>

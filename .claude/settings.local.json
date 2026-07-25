@@ -16,8 +16,7 @@
       "Bash(gh repo *)",
       "Bash(npx next *)",
       "Bash(npx eslint *)",
-      "Bash(echo \"eslint exit: $?\")",
-      "Bash(npm install *)"
+      "Bash(echo \"eslint exit: $?\")"
     ]
   }
 }

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { AuthProvider } from "@/lib/auth";
 import { VisitedProvider } from "@/lib/visited";
 import { TabBar } from "@/components/TabBar";
 import "../globals.css";
@@ -49,14 +48,12 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${caprasimo.variable} ${figtree.variable}`}>
       <body className="bg-surface font-body text-ink antialiased">
         <NextIntlClientProvider>
-          <AuthProvider>
-            <VisitedProvider>
-              <div className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-ground shadow-lg">
-                <main className="flex-1 pb-[84px]">{children}</main>
-              </div>
-              <TabBar />
-            </VisitedProvider>
-          </AuthProvider>
+          <VisitedProvider>
+            <div className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-ground shadow-lg">
+              <main className="flex-1 pb-[84px]">{children}</main>
+            </div>
+            <TabBar />
+          </VisitedProvider>
         </NextIntlClientProvider>
       </body>
     </html>
