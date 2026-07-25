@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-f157aae1-31c4-457d-afb3-183af4da8798/styles.css">
+<script src="_ds/organic-f157aae1-31c4-457d-afb3-183af4da8798/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-surface);font-family:var(--font-body);display:flex;justify-content:center;padding:28px 0}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}
+@keyframes stampIn{0%{transform:scale(2.4) rotate(-16deg);opacity:0}55%{transform:scale(.9) rotate(3deg);opacity:1}75%{transform:scale(1.06) rotate(-1deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes popDot{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.15);opacity:0}}
+</style>
+</helmet>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="430px,880px">
+<div style="height:100%;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);padding-top:58px;box-sizing:border-box">
+
+<sc-if value="{{ showDetail }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="padding:6px 10px 0">
+    <button onClick="{{ closeDetail }}" style="display:flex;align-items:center;gap:2px;background:none;border:none;color:var(--color-accent-700);font-family:var(--font-body);font-weight:700;font-size:15px;cursor:pointer;padding:10px 8px;min-height:44px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+      Parks
+    </button>
+  </div>
+  <div style="flex:1;overflow:auto;padding:0 24px 28px">
+    <div style="position:relative;display:flex;justify-content:center;padding:8px 0 4px">
+      <div style="filter:{{ det.dim }};animation:{{ det.anim }}">
+        <svg width="156" height="156" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="30" fill="{{ det.cMain }}"></circle>
+          <circle cx="32" cy="32" r="25" fill="{{ det.cLight }}" stroke="{{ det.cDark }}" stroke-width="1.4"></circle>
+          <path d="{{ det.glyph }}" transform="translate(17.5,17.5) scale(1.2)" fill="none" stroke="{{ det.cDark }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+          <ellipse cx="23" cy="17" rx="11" ry="5" fill="rgba(255,255,255,.38)" transform="rotate(-28 23 17)"></ellipse>
+        </svg>
+      </div>
+      <sc-if value="{{ det.burst }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ confetti }}" as="d" hint-placeholder-count="0">
+          <span style="position:absolute;left:50%;top:45%;width:{{ d.sz }}px;height:{{ d.sz }}px;border-radius:{{ d.rad }};background:{{ d.bg }};--dx:{{ d.dx }}px;--dy:{{ d.dy }}px;animation:popDot {{ d.dur }}s ease-out {{ d.delay }}s both;pointer-events:none"></span>
+        </sc-for>
+      </sc-if>
+    </div>
+    <h1 style="font-family:var(--font-heading);font-weight:400;font-size:29px;line-height:1.15;text-align:center;margin:12px 0 2px">{{ det.name }}</h1>
+    <sc-if value="{{ det.sami }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;color:var(--color-neutral-600);font-size:14px;font-style:italic">{{ det.sami }}</div>
+    </sc-if>
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0 18px">
+      <span class="tag tag-accent-2">{{ det.r }}</span>
+      <span class="tag tag-neutral">{{ det.estLabel }}</span>
+      <span class="tag tag-neutral">{{ det.areaLabel }}</span>
+    </div>
+    <p style="font-size:15px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 22px;text-wrap:pretty;text-align:center">{{ det.d }}</p>
+    <sc-if value="{{ det.visited }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--color-accent-2-200);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:12px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        <div style="font-weight:700;color:var(--color-accent-2-800);font-size:15px">Pinned {{ det.date }}</div>
+        <button onClick="{{ det.unmark }}" style="background:none;border:none;color:var(--color-accent-2-700);font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:underline;cursor:pointer;padding:8px;min-height:44px">Undo</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ det.notVisited }}" hint-placeholder-val="{{ true }}">
+      <button class="btn btn-primary btn-block" onClick="{{ det.mark }}" style="min-height:52px;font-size:16px;margin-bottom:12px">I've been here — pin it!</button>
+    </sc-if>
+    <a class="btn btn-ghost btn-block" href="{{ det.url }}" target="_blank" style="min-height:48px;text-decoration:none">Plan a trip on the official site ↗</a>
+    <p style="text-align:center;font-size:11.5px;color:var(--color-neutral-500);margin:18px 0 0">Unofficial tracker — not affiliated with Naturvårdsverket.</p>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showParks }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="padding:16px 18px 10px;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div style="font-family:var(--font-heading);font-size:27px">Parkpass</div>
+      <span class="tag tag-accent">{{ countPinnedLabel }}</span>
+    </div>
+    <input class="input" style="border-radius:999px;font-size:15px" placeholder="Search parks or regions…" value="{{ query }}" onChange="{{ setQuery }}">
+    <div style="display:flex;gap:8px">
+      <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="3">
+        <button onClick="{{ ch.go }}" style="background:{{ ch.bg }};color:{{ ch.fg }};border:1.5px solid {{ ch.bd }};padding:9px 15px;border-radius:999px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer">{{ ch.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="flex:1;overflow:auto">
+    <sc-for list="{{ parks }}" as="p" hint-placeholder-count="6">
+      <div onClick="{{ p.open }}" style="display:flex;gap:14px;align-items:center;padding:10px 18px;min-height:66px;cursor:pointer;border-bottom:1px solid var(--color-divider)" style-hover="background:var(--color-neutral-100)">
+        <div style="filter:{{ p.dim }};flex:none;display:flex">
+          <svg width="46" height="46" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="30" fill="{{ p.cMain }}"></circle>
+            <circle cx="32" cy="32" r="25" fill="{{ p.cLight }}" stroke="{{ p.cDark }}" stroke-width="1.6"></circle>
+            <path d="{{ p.glyph }}" transform="translate(17.5,17.5) scale(1.2)" fill="none" stroke="{{ p.cDark }}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <ellipse cx="23" cy="17" rx="11" ry="5" fill="rgba(255,255,255,.38)" transform="rotate(-28 23 17)"></ellipse>
+          </svg>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:15px">{{ p.name }}</div>
+          <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ p.meta }}</div>
+        </div>
+        <sc-if value="{{ p.visited }}" hint-placeholder-val="{{ false }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-600)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        </sc-if>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-400)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:40px 24px;text-align:center;color:var(--color-neutral-600);font-size:14px">No parks match — try "Lapland" or "Skåne".</div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showBadges }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="padding:16px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+    <div style="font-family:var(--font-heading);font-size:27px">Pin board</div>
+    <span class="tag tag-accent">{{ countLabel }}</span>
+  </div>
+  <div style="flex:1;overflow:auto;padding:4px 14px 20px">
+    <div style="padding:10px;border-radius:calc(var(--radius-md) + 10px);background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(0,0,0,.16)), repeating-linear-gradient(92deg, #8c5a2e 0px, #7a4c24 7px, #96632f 14px, #82522a 22px, #8f5d2d 30px);box-shadow:var(--shadow-md), inset 0 1px 2px rgba(255,255,255,.3), inset 0 -2px 4px rgba(0,0,0,.3)">
+    <div style="background:url('uploads/dark-green-background-from-textile-material-with-wicker_113767-1371.avif') center/280px repeat, #3a4a28;border-radius:var(--radius-md);padding:20px 12px 22px;box-shadow:inset 0 3px 12px rgba(0,0,0,.5), inset 0 -1px 3px rgba(255,255,255,.08)">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px 10px">
+      <sc-for list="{{ all }}" as="p" hint-placeholder-count="9">
+        <button onClick="{{ p.open }}" style="display:flex;flex-direction:column;align-items:center;gap:7px;background:none;border:none;cursor:pointer;padding:6px 2px;font-family:var(--font-body)">
+          <div style="filter:{{ p.boardDim }};display:flex">
+            <svg width="74" height="74" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="30" fill="{{ p.cMain }}"></circle>
+              <circle cx="32" cy="32" r="25" fill="{{ p.cLight }}" stroke="{{ p.cDark }}" stroke-width="1.5"></circle>
+              <path d="{{ p.glyph }}" transform="translate(17.5,17.5) scale(1.2)" fill="none" stroke="{{ p.cDark }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <ellipse cx="23" cy="17" rx="11" ry="5" fill="rgba(255,255,255,.38)" transform="rotate(-28 23 17)"></ellipse>
+            </svg>
+          </div>
+          <div style="font-size:10.5px;line-height:1.25;font-weight:700;color:{{ p.boardName }};text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.4)">{{ p.name }}</div>
+        </button>
+      </sc-for>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showProfile }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;overflow:auto;padding:16px 20px 24px;display:flex;flex-direction:column;gap:16px">
+  <div style="font-family:var(--font-heading);font-size:27px">Your expedition</div>
+  <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <span style="font-family:var(--font-heading);font-size:44px;color:var(--color-accent-700)">{{ count }}</span>
+      <span style="font-size:17px;font-weight:700;color:var(--color-neutral-600)">/ 31 parks pinned</span>
+    </div>
+    <div style="height:14px;background:var(--color-neutral-300);border-radius:999px;overflow:hidden">
+      <div style="height:100%;width:{{ pct }}%;background:var(--color-accent);border-radius:999px;transition:width .5s ease"></div>
+    </div>
+    <div style="font-size:13.5px;color:var(--color-neutral-700)">{{ progressLine }}</div>
+  </div>
+  <div class="card" style="padding:18px 20px;background:var(--color-accent-2-200);display:flex;flex-direction:column;gap:8px">
+    <div style="font-weight:800;font-size:15px;color:var(--color-accent-2-900)">The diploma awaits 🏅</div>
+    <div style="font-size:13.5px;line-height:1.5;color:var(--color-accent-2-800)">Visit all 31 and Naturvårdsverket will send you a diploma signed by the Director General. Really.</div>
+    <a href="https://www.sverigesnationalparker.se/inspiration-och-kunskap/krysslista" target="_blank" style="font-size:13.5px;font-weight:700;color:var(--color-accent-2-700)">About the official checklist ↗</a>
+  </div>
+  <div class="card" style="padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-weight:800;font-size:15px">Keep your pins safe</div>
+    <div style="font-size:13.5px;line-height:1.5;color:var(--color-neutral-700)">Your progress lives on this device for now. Sign in to sync it everywhere.</div>
+    <button class="btn btn-secondary btn-block" style="min-height:48px">Sign in — coming soon</button>
+  </div>
+  <p style="text-align:center;font-size:11.5px;color:var(--color-neutral-500);margin:4px 0 0">Unofficial tracker · Visits are on your honor 🤝</p>
+</div>
+</sc-if>
+
+<div style="display:flex;border-top:1px solid var(--color-divider);background:var(--color-neutral-100);padding:6px 10px 4px;flex:none">
+  <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+    <button onClick="{{ t.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:8px 0 6px;min-height:52px;color:{{ t.color }};font-family:var(--font-body);font-weight:700;font-size:11px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"></path></svg>
+      {{ t.label }}
+    </button>
+  </sc-for>
+</div>
+
+</div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:960},&quot;demoSeed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;samiNames&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;confetti&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Delight&quot;}}">
+class Component extends DCLogic {
+  state = { tab: 'parks', sel: null, query: '', chip: 'all', visited: null, stamped: null };
+
+  componentDidMount() {
+    let v = null;
+    try { v = JSON.parse(localStorage.getItem('parkpass-visited') || 'null'); } catch (e) {}
+    if (!v) {
+      v = {};
+      if (this.props.demoSeed ?? true) {
+        ['abisko','tyresta','soderasen','store-mosse','skuleskogen','tiveden'].forEach((id, i) => {
+          v[id] = new Date(Date.now() - (i + 2) * 26 * 86400000).toISOString().slice(0, 10);
+        });
+      }
+    }
+    this.setState({ visited: v });
+  }
+
+  persist(v) { try { localStorage.setItem('parkpass-visited', JSON.stringify(v)); } catch (e) {} }
+
+  mark(id) {
+    const v = { ...(this.state.visited || {}), [id]: new Date().toISOString().slice(0, 10) };
+    this.persist(v);
+    clearTimeout(this._t);
+    this.setState({ visited: v, stamped: id });
+    this._t = setTimeout(() => this.setState({ stamped: null }), 1300);
+  }
+
+  unmark(id) {
+    const v = { ...(this.state.visited || {}) };
+    delete v[id];
+    this.persist(v);
+    this.setState({ visited: v, stamped: null });
+  }
+
+  fmtDate(iso) {
+    try { return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+    catch (e) { return iso; }
+  }
+
+  deco(p, visitedDate) {
+    const col = Component.COLORS[p.c];
+    const showSami = (this.props.samiNames ?? true) && p.s;
+    return {
+      ...p, name: p.n, sami: showSami ? p.s : null,
+      meta: p.r + ' · Est. ' + p.y + ' · ' + p.a + ' km²',
+      estLabel: 'Est. ' + p.y, areaLabel: p.a + ' km²',
+      glyph: Component.GLYPHS[p.g], cMain: col.c, cLight: col.light, cDark: col.dark,
+      dim: visitedDate ? 'none' : 'grayscale(1) opacity(.38)',
+      nameColor: visitedDate ? 'var(--color-neutral-800)' : 'var(--color-neutral-500)',
+      boardDim: visitedDate ? 'drop-shadow(0 3px 3px rgba(0,0,0,.4))' : 'grayscale(1) opacity(.32) brightness(1.25)',
+      boardName: visitedDate ? '#f5ead8' : 'rgba(245,234,216,.45)',
+      visited: !!visitedDate, notVisited: !visitedDate,
+      date: visitedDate ? this.fmtDate(visitedDate) : '',
+      open: () => this.setState({ sel: p.id, stamped: null }),
+      url: 'https://www.sverigesnationalparker.se/park/' + p.id + '-nationalpark/',
+      mark: () => this.mark(p.id), unmark: () => this.unmark(p.id)
+    };
+  }
+
+  confettiDots() {
+    if (!this._dots) {
+      const cols = ['#c67139', '#7a8a5e', '#f6a06b', '#aebf92', '#8c491a', '#e1eecc'];
+      this._dots = Array.from({ length: 16 }, (_, i) => {
+        const ang = (i / 16) * Math.PI * 2 + (i % 3) * .21;
+        const dist = 78 + (i % 5) * 14;
+        return {
+          sz: 6 + (i % 4) * 2, rad: i % 2 ? '50%' : '3px', bg: cols[i % 6],
+          dx: Math.round(Math.cos(ang) * dist), dy: Math.round(Math.sin(ang) * dist - 24),
+          dur: (0.65 + (i % 4) * 0.09).toFixed(2), delay: ((i % 5) * 0.03).toFixed(2)
+        };
+      });
+    }
+    return this._dots;
+  }
+
+  renderVals() {
+    const v = this.state.visited || {};
+    const q = this.state.query.trim().toLowerCase();
+    const chip = this.state.chip;
+    const all = Component.PARKS.map(p => this.deco(p, v[p.id]));
+    let parks = all.filter(p => !q || (p.n + ' ' + (p.s || '') + ' ' + p.r).toLowerCase().includes(q));
+    if (chip === 'visited') parks = parks.filter(p => p.visited);
+    if (chip === 'todo') parks = parks.filter(p => !p.visited);
+    const count = all.filter(p => p.visited).length;
+    const selPark = this.state.sel ? all.find(p => p.id === this.state.sel) : null;
+    const det = selPark ? {
+      ...selPark,
+      dim: selPark.visited ? 'none' : 'grayscale(.85) opacity(.5)',
+      anim: this.state.stamped === selPark.id ? 'stampIn .55s cubic-bezier(.2,1.4,.4,1) both' : 'none',
+      burst: this.state.stamped === selPark.id && (this.props.confetti ?? true)
+    } : null;
+    const chipDefs = [['all', 'All 31'], ['visited', 'Pinned'], ['todo', 'Not yet']];
+    const chips = chipDefs.map(([id, label]) => ({
+      label,
+      bg: chip === id ? 'var(--color-accent)' : 'transparent',
+      fg: chip === id ? '#fff' : 'var(--color-neutral-700)',
+      bd: chip === id ? 'var(--color-accent)' : 'var(--color-neutral-400)',
+      go: () => this.setState({ chip: id })
+    }));
+    const tabs = [
+      ['parks', 'Parks', 'M17 14l3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z M12 22v-3'],
+      ['badges', 'Pin board', 'M12 14a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z M15.5 12.9 17 22l-5-3-5 3 1.5-9.1'],
+      ['profile', 'You', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z']
+    ].map(([id, label, icon]) => ({
+      label, icon,
+      color: this.state.tab === id && !this.state.sel ? 'var(--color-accent-700)' : 'var(--color-neutral-500)',
+      go: () => this.setState({ tab: id, sel: null, stamped: null })
+    }));
+    const remaining = 31 - count;
+    return {
+      parks, all, det, chips, tabs, count,
+      countLabel: count + ' / 31', countPinnedLabel: count + ' / 31 pinned',
+      pct: Math.round(count / 31 * 100),
+      progressLine: count === 31 ? 'All 31! Time to claim that diploma. 🎉' : remaining + (remaining === 1 ? ' park' : ' parks') + ' to go — the diploma is waiting.',
+      noResults: parks.length === 0,
+      query: this.state.query,
+      setQuery: (e) => this.setState({ query: e.target.value }),
+      closeDetail: () => this.setState({ sel: null, stamped: null }),
+      confetti: this.confettiDots(),
+      showDetail: !!selPark,
+      showParks: this.state.tab === 'parks' && !selPark,
+      showBadges: this.state.tab === 'badges' && !selPark,
+      showProfile: this.state.tab === 'profile' && !selPark
+    };
+  }
+}
+
+Component.GLYPHS = {
+  mtn: 'm8 3 4 8 5-5 5 15H2L8 3z',
+  pine: 'M17 14l3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z M12 22v-3',
+  wave: 'M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1',
+  leaf: 'M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12',
+  sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M12 2v2 M12 20v2 M4.93 4.93l1.41 1.41 M17.66 17.66l1.41 1.41 M2 12h2 M20 12h2 M6.34 17.66l-1.41 1.41 M19.07 4.93l-1.41 1.41'
+};
+Component.COLORS = [
+  { c: '#c67139', light: '#ffe1d0', dark: '#8c491a' },
+  { c: '#7a8a5e', light: '#e1eecc', dark: '#3d472b' },
+  { c: '#d67f48', light: '#fff2eb', dark: '#8c491a' },
+  { c: '#8fa073', light: '#f0fae1', dark: '#3d472b' },
+  { c: '#b2622d', light: '#ffc6a5', dark: '#643312' },
+  { c: '#56633f', light: '#ccdbb2', dark: '#272e1b' }
+];
+Component.PARKS = [
+  { id: 'abisko', n: 'Abisko', r: 'Lapland', y: 1909, a: 77, g: 'mtn', c: 0, d: 'Arctic birch forest, the grand Abisko canyon and the northern gateway to the Kungsleden trail.' },
+  { id: 'vadvetjakka', n: 'Vadvetjåkka', r: 'Lapland', y: 1920, a: 26, g: 'mtn', c: 1, d: "Sweden's northernmost park — bogs, limestone caves and a river delta very few ever visit." },
+  { id: 'stora-sjofallet', n: 'Stora Sjöfallet', s: 'Stuor Muorkke', r: 'Lapland', y: 1909, a: 1278, g: 'mtn', c: 2, d: 'Sharp peaks and vast mountain lakes around the once-mighty great falls.' },
+  { id: 'padjelanta', n: 'Padjelanta', s: 'Badjelánnda', r: 'Lapland', y: 1962, a: 1984, g: 'sun', c: 3, d: "Sweden's largest park — a high, open plateau that is Sámi summer grazing land." },
+  { id: 'sarek', n: 'Sarek', r: 'Lapland', y: 1909, a: 1970, g: 'mtn', c: 4, d: "Trail-less peaks, glaciers and the Rapa valley delta — Europe's great wilderness." },
+  { id: 'muddus', n: 'Muddus', s: 'Muttos', r: 'Lapland', y: 1942, a: 493, g: 'pine', c: 5, d: 'Ancient pine forest, deep gorges and great silent bogs.' },
+  { id: 'pieljekaise', n: 'Pieljekaise', s: 'Bielljekajsse', r: 'Lapland', y: 1909, a: 153, g: 'leaf', c: 0, d: 'Quiet fells and endless mountain-birch forest just above the Arctic Circle.' },
+  { id: 'haparanda-skargard', n: 'Haparanda Skärgård', r: 'Bothnian Bay', y: 1995, a: 60, g: 'wave', c: 1, d: 'Sandy outer-archipelago islands in the shallow, brackish Bothnian Bay.' },
+  { id: 'bjornlandet', n: 'Björnlandet', r: 'Ångermanland', y: 1991, a: 111, g: 'pine', c: 2, d: 'Fire-scarred old-growth forest, cliffs and boulder fields.' },
+  { id: 'skuleskogen', n: 'Skuleskogen', r: 'High Coast', y: 1984, a: 30, g: 'mtn', c: 3, d: 'Coastal peaks, the Slåttdalsskrevan crevice and the ever-rising High Coast.' },
+  { id: 'sonfjallet', n: 'Sonfjället', r: 'Härjedalen', y: 1909, a: 104, g: 'mtn', c: 4, d: "A bare, round fell that is one of Sweden's best places to spot bears." },
+  { id: 'tofsingdalen', n: 'Töfsingdalen', r: 'Dalarna', y: 1930, a: 16, g: 'pine', c: 5, d: 'Roadless boulder valleys and gnarled old pines — for the truly determined.' },
+  { id: 'fulufjallet', n: 'Fulufjället', r: 'Dalarna', y: 2002, a: 385, g: 'mtn', c: 0, d: "Njupeskär, Sweden's tallest waterfall, and Old Tjikko, the 9,500-year-old spruce." },
+  { id: 'hamra', n: 'Hamra', r: 'Dalarna', y: 1909, a: 14, g: 'pine', c: 1, d: 'Old-growth forest, wild rapids and mile-wide marshes packed into one small park.' },
+  { id: 'farnebofjarden', n: 'Färnebofjärden', r: 'Lower Dalälven', y: 1998, a: 101, g: 'wave', c: 2, d: 'A river wilderness of rapids and flooded forests, alive with eagles.' },
+  { id: 'garphyttan', n: 'Garphyttan', r: 'Närke', y: 1909, a: 1.1, g: 'leaf', c: 3, d: 'A preserved old farming landscape that erupts in spring flowers.' },
+  { id: 'tyresta', n: 'Tyresta', r: 'Stockholm', y: 1993, a: 20, g: 'pine', c: 4, d: 'Primeval forest with 400-year-old pines, twenty minutes from the capital.' },
+  { id: 'angso', n: 'Ängsö', r: 'Stockholm archipelago', y: 1909, a: 1.7, g: 'leaf', c: 5, d: 'A tiny meadow island kept exactly as farmland looked a century ago.' },
+  { id: 'namdoskargarden', n: 'Nämdöskärgården', r: 'Stockholm archipelago', y: 2025, a: 24, g: 'wave', c: 0, d: "Sweden's newest park — a thousand islands, islets and skerries." },
+  { id: 'norra-kvill', n: 'Norra Kvill', r: 'Småland', y: 1927, a: 1.1, g: 'pine', c: 1, d: 'Giant boulders and 350-year-old pines in a pocket of ancient forest.' },
+  { id: 'store-mosse', n: 'Store Mosse', r: 'Småland', y: 1982, a: 100, g: 'sun', c: 2, d: 'The largest bog south of Lapland, with cranes calling over golden mires.' },
+  { id: 'bla-jungfrun', n: 'Blå Jungfrun', r: 'Kalmar Strait', y: 1926, a: 2, g: 'sun', c: 3, d: 'A bare blue granite dome rising from the sea, wrapped in legend.' },
+  { id: 'gotska-sandon', n: 'Gotska Sandön', r: 'Baltic Sea', y: 1909, a: 45, g: 'wave', c: 4, d: 'A remote island of sand dunes and pine forest, far out in the Baltic.' },
+  { id: 'asnen', n: 'Åsnen', r: 'Småland', y: 2018, a: 19, g: 'wave', c: 5, d: 'A labyrinth of lake, islands and untouched shoreline forest.' },
+  { id: 'stenshuvud', n: 'Stenshuvud', r: 'Skåne', y: 1986, a: 4, g: 'sun', c: 0, d: 'Warm beaches, hornbeam woods and a hilltop view over all of Österlen.' },
+  { id: 'dalby-soderskog', n: 'Dalby Söderskog', r: 'Skåne', y: 1918, a: 0.4, g: 'leaf', c: 1, d: 'A small deciduous wood carpeted in anemones every spring.' },
+  { id: 'soderasen', n: 'Söderåsen', r: 'Skåne', y: 2001, a: 16, g: 'leaf', c: 2, d: 'Beech-clad ravines and sweeping views from the Kopparhatten cliff.' },
+  { id: 'kosterhavet', n: 'Kosterhavet', r: 'Bohuslän', y: 2009, a: 389, g: 'wave', c: 3, d: "Sweden's first marine park — cold-water corals and seal-dotted skerries." },
+  { id: 'tiveden', n: 'Tiveden', r: 'Tiveden', y: 1983, a: 20, g: 'pine', c: 4, d: 'Troll forest of giant boulders between lakes Vättern and Vänern.' },
+  { id: 'djuro', n: 'Djurö', r: 'Lake Vänern', y: 1991, a: 24, g: 'wave', c: 5, d: "A lonely island group far out in Sweden's largest lake." },
+  { id: 'tresticklan', n: 'Tresticklan', r: 'Dalsland', y: 1996, a: 30, g: 'pine', c: 0, d: 'One of the last roadless wilderness forests in southern Scandinavia.' }
+];
+</script>
+</body>
+</html>

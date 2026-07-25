@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.sverigesnationalparker.se)",
+      "Bash(npx -y create-next-app@latest parkpass-web --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(npm i *)",
+      "Bash(npm ls *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(rm -rf parkpass-web/.git)",
+      "Bash(git init *)"
+    ]
+  }
+}
