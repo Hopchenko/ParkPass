@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Parkpass — krysslista för Sveriges nationalparker",
+    "title": "ParkPass — krysslista för svenska nationalparker",
     "description": "Bocka av alla 31 svenska nationalparker. Samla en nål för varje park du besöker."
   },
   "tabs": {
@@ -9,7 +9,8 @@
     "you": "Du"
   },
   "parks": {
-    "title": "Parkpass",
+    "title": "ParkPass",
+    "subtitle": "Svenska nationalparker",
     "pinnedCount": "{count} / 31 nålade",
     "searchPlaceholder": "Sök park eller landskap…",
     "chipAll": "Alla 31",

@@ -52,11 +52,21 @@ export function ParkList() {
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-2.5 px-[18px] pt-4 pb-1.5">
-        <h1 className="font-heading text-[27px]">Parkpass</h1>
-        <span className="rounded-full bg-accent-100 px-2.5 py-[3px] text-[11px] tracking-[0.02em] text-accent-800">
-          {t("pinnedCount", { count })}
-        </span>
+      <div className="px-[18px] pt-4 pb-1.5">
+        <div className="flex items-center justify-between gap-2.5">
+          <h1 className="flex items-center gap-2 font-heading text-[27px]">
+            {t("title")}
+            <span className="text-[21px]" aria-hidden="true">
+              🇸🇪
+            </span>
+          </h1>
+          <span className="rounded-full bg-accent-100 px-2.5 py-[3px] text-[11px] tracking-[0.02em] text-accent-800">
+            {t("pinnedCount", { count })}
+          </span>
+        </div>
+        <p className="text-[13.5px] leading-tight text-neutral-600">
+          {t("subtitle")}
+        </p>
       </div>
 
       <div ref={sentinelRef} aria-hidden="true" />

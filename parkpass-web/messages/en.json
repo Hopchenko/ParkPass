@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Parkpass — Sweden's national parks checklist",
+    "title": "ParkPass — Sweden's national parks checklist",
     "description": "Track and check off all 31 Swedish national parks. Collect a pin for every park you visit."
   },
   "tabs": {
@@ -9,7 +9,8 @@
     "you": "You"
   },
   "parks": {
-    "title": "Parkpass",
+    "title": "ParkPass",
+    "subtitle": "Swedish national parks",
     "pinnedCount": "{count} / 31 pinned",
     "searchPlaceholder": "Search parks or regions…",
     "chipAll": "All 31",

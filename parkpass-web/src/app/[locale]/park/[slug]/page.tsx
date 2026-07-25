@@ -21,7 +21,7 @@ export async function generateMetadata({
   if (!park) return {};
   const loc: Locale = locale === "en" ? "en" : "sv";
   return {
-    title: `${park.name} — Parkpass`,
+    title: `${park.name} — ParkPass`,
     description: park.description[loc],
   };
 }
