@@ -1,2 +1,6 @@
 .DS_Store
 Parkpass mobile prototype.zip
+
+# stray build output (real build output lives in parkpass-web/.next)
+.next/
+node_modules/

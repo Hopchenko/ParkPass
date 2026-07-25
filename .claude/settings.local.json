@@ -26,7 +26,14 @@
       "Bash(git branch *)",
       "Bash(git revert *)",
       "Bash(git stash *)",
-      "Bash(npx --prefix parkpass-web next build)"
+      "Bash(npx --prefix parkpass-web next build)",
+      "Bash(gh pr create --base main --head feature/supabase-auth --title 'Add Supabase auth \\(Google + magic link\\) with visit sync' --body ' *)",
+      "Bash(gh api *)",
+      "Bash(curl -sL \"https://www.sverigesnationalparker.se/sv/upptack-nationalparkerna\" -o discover.html)",
+      "Bash(curl -sL \"https://www.sverigesnationalparker.se/en/parks\" -o discover-en.html)",
+      "Bash(node scripts/check-official-links.mjs)",
+      "Bash(curl -sL \"https://www.sverigesnationalparker.se/en\" -o en-home.html)",
+      "Bash(git fetch *)"
     ]
   }
 }
