@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PARKS } from "@/data/parks";
@@ -16,6 +16,19 @@ export function ParkList() {
   const { visited, count } = useVisited();
   const [query, setQuery] = useState("");
   const [chip, setChip] = useState<Chip>("all");
+  const [stuck, setStuck] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   const parks = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -39,13 +52,19 @@ export function ParkList() {
 
   return (
     <div>
-      <div className="flex flex-col gap-3 px-[18px] pt-4 pb-2.5">
-        <div className="flex items-center justify-between gap-2.5">
-          <h1 className="font-heading text-[27px]">Parkpass</h1>
-          <span className="rounded-full bg-accent-100 px-2.5 py-[3px] text-[11px] tracking-[0.02em] text-accent-800">
-            {t("pinnedCount", { count })}
-          </span>
-        </div>
+      <div className="flex items-center justify-between gap-2.5 px-[18px] pt-4 pb-1.5">
+        <h1 className="font-heading text-[27px]">Parkpass</h1>
+        <span className="rounded-full bg-accent-100 px-2.5 py-[3px] text-[11px] tracking-[0.02em] text-accent-800">
+          {t("pinnedCount", { count })}
+        </span>
+      </div>
+
+      <div ref={sentinelRef} aria-hidden="true" />
+      <div
+        className={`sticky top-0 z-10 flex flex-col gap-3 bg-ground px-[18px] py-2.5 transition-shadow duration-200 ${
+          stuck ? "shadow-md" : "shadow-none"
+        }`}
+      >
         <input
           className="min-h-[44px] w-full rounded-full border border-divider bg-surface px-4 text-[15px] caret-accent placeholder:text-neutral-500 hover:border-neutral-500 focus-visible:border-accent focus-visible:outline-offset-0"
           placeholder={t("searchPlaceholder")}
