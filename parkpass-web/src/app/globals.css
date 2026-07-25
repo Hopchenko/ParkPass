@@ -29,6 +29,18 @@
   --color-sage-800: #3d472b;
   --color-sage-900: #272e1b;
 
+  /* Metallic gold for the enamel-pin rims — a highlight→shadow ramp rather
+     than a tonal scale, so a gradient across it reads as brushed metal. */
+  --color-gold-100: #fdf3cd;
+  --color-gold-200: #f6e2a0;
+  --color-gold-300: #e8c86e;
+  --color-gold-400: #d9ad48;
+  --color-gold-500: #c2912c;
+  --color-gold-600: #a5761f;
+  --color-gold-700: #855d18;
+  --color-gold-800: #654613;
+  --color-gold-900: #46300d;
+
   --color-neutral-100: #f9f4ed;
   --color-neutral-200: #eee7db;
   --color-neutral-300: #dcd3c4;
