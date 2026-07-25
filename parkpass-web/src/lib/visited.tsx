@@ -4,38 +4,44 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
+  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { PARKS } from "@/data/parks";
+import { useAuth } from "./auth";
+import { createClient } from "./supabase/client";
 
 const STORAGE_KEY = "parkpass-visited";
 
 /** slug → ISO date (yyyy-mm-dd) of the visit. */
 export type VisitedMap = Record<string, string>;
 
+/* Local (anonymous) store — localStorage behind useSyncExternalStore so SSR
+   hydrates cleanly: server renders EMPTY, client re-renders with real data. */
 const EMPTY: VisitedMap = {};
-let cache: VisitedMap | null = null;
+let localCache: VisitedMap | null = null;
 const listeners = new Set<() => void>();
 
-function load(): VisitedMap {
-  if (cache) return cache;
+function readLocal(): VisitedMap {
+  if (localCache) return localCache;
   try {
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null");
-    cache =
+    localCache =
       parsed && typeof parsed === "object" && !Array.isArray(parsed)
         ? (parsed as VisitedMap)
         : {};
   } catch {
-    // Corrupt value or storage unavailable — start fresh.
-    cache = {};
+    localCache = {};
   }
-  return cache;
+  return localCache;
 }
 
-function write(next: VisitedMap) {
-  cache = next;
+function writeLocal(next: VisitedMap) {
+  localCache = next;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   } catch {
@@ -49,7 +55,7 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
-const getSnapshot = () => load();
+const getLocalSnapshot = () => readLocal();
 const getServerSnapshot = () => EMPTY;
 
 type VisitedContextValue = {
@@ -62,17 +68,97 @@ type VisitedContextValue = {
 const VisitedContext = createContext<VisitedContextValue | null>(null);
 
 export function VisitedProvider({ children }: { children: ReactNode }) {
-  const visited = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const { session, loading: authLoading } = useAuth();
+  const localVisited = useSyncExternalStore(
+    subscribe,
+    getLocalSnapshot,
+    getServerSnapshot,
+  );
+  // Remote snapshot — the source of truth once signed in. Ignored while signed out.
+  const [remoteVisited, setRemoteVisited] = useState<VisitedMap>(EMPTY);
+  // Guards the local→remote merge to run exactly once per signed-in user.
+  const mergedFor = useRef<string | null>(null);
 
-  const mark = useCallback((slug: string) => {
-    write({ ...load(), [slug]: new Date().toISOString().slice(0, 10) });
-  }, []);
+  useEffect(() => {
+    if (authLoading || !session) return;
 
-  const unmark = useCallback((slug: string) => {
-    const next = { ...load() };
-    delete next[slug];
-    write(next);
-  }, []);
+    let cancelled = false;
+    const supabase = createClient();
+
+    (async () => {
+      const { data } = await supabase
+        .from("visits")
+        .select("park_slug, visited_at")
+        .eq("user_id", session.user.id);
+
+      const remote: VisitedMap = {};
+      for (const row of data ?? []) remote[row.park_slug] = row.visited_at;
+
+      if (mergedFor.current !== session.user.id) {
+        mergedFor.current = session.user.id;
+        const local = readLocal();
+        const toUpload = Object.entries(local).filter(([slug]) => !(slug in remote));
+        if (toUpload.length > 0) {
+          await supabase.from("visits").upsert(
+            toUpload.map(([park_slug, visited_at]) => ({
+              user_id: session.user.id,
+              park_slug,
+              visited_at,
+            })),
+          );
+          toUpload.forEach(([slug, date]) => (remote[slug] = date));
+        }
+        writeLocal({});
+      }
+
+      if (!cancelled) setRemoteVisited(remote);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session, authLoading]);
+
+  const mark = useCallback(
+    (slug: string) => {
+      const date = new Date().toISOString().slice(0, 10);
+      if (session) {
+        setRemoteVisited((prev) => ({ ...prev, [slug]: date }));
+        createClient()
+          .from("visits")
+          .upsert({ user_id: session.user.id, park_slug: slug, visited_at: date })
+          .then(({ error }) => error && console.error(error));
+      } else {
+        writeLocal({ ...readLocal(), [slug]: date });
+      }
+    },
+    [session],
+  );
+
+  const unmark = useCallback(
+    (slug: string) => {
+      if (session) {
+        setRemoteVisited((prev) => {
+          const next = { ...prev };
+          delete next[slug];
+          return next;
+        });
+        createClient()
+          .from("visits")
+          .delete()
+          .eq("user_id", session.user.id)
+          .eq("park_slug", slug)
+          .then(({ error }) => error && console.error(error));
+      } else {
+        const next = { ...readLocal() };
+        delete next[slug];
+        writeLocal(next);
+      }
+    },
+    [session],
+  );
+
+  const visited = session ? remoteVisited : localVisited;
 
   const count = useMemo(
     () => PARKS.reduce((n, p) => n + (visited[p.slug] ? 1 : 0), 0),

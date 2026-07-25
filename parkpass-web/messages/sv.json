@@ -42,7 +42,12 @@
     "diplomaLink": "Om den officiella krysslistan ↗",
     "syncTitle": "Håll dina nålar i tryggt förvar",
     "syncBody": "Dina framsteg sparas än så länge bara på den här enheten. Logga in för att synka dem överallt.",
-    "signIn": "Logga in — kommer snart",
+    "signInGoogle": "Fortsätt med Google",
+    "emailPlaceholder": "du@exempel.se",
+    "signInEmail": "Skicka en inloggningslänk",
+    "magicLinkSent": "Kolla din mejl för en inloggningslänk.",
+    "signedInAs": "Inloggad som {email}.",
+    "signOut": "Logga ut",
     "honor": "Inofficiell tjänst · Besök på hedersord 🤝",
     "language": "Språk"
   }
