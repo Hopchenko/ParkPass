@@ -29,6 +29,8 @@ Web app first, with a mobile app planned. See [PLAN.md](PLAN.md) for the full pr
 
 ## Getting started
 
+Requires Node.js 20.9 or newer.
+
 ```bash
 cd parkpass-web
 npm install
@@ -72,7 +74,7 @@ Deployed on Vercel from `main`. **The app is not at the repo root**, so the Verc
 
 ## Status
 
-Shipped: parks list, park detail, map, pin board, progress, Swedish/English.
+Shipped: parks list, park detail, map, pin board, progress, Swedish/English. The pin badges are generated placeholders for now — final per-park enamel-pin artwork drops into the same slots.
 
 In progress on the `feature/supabase-auth` branch: accounts via Google sign-in and passwordless magic links, so progress syncs across devices. It's parked pending Google OAuth setup — see the branch's pull request for the remaining steps.
 
