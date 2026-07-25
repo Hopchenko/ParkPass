@@ -5,8 +5,16 @@
   },
   "tabs": {
     "parks": "Parker",
+    "map": "Karta",
     "board": "Nålbrädan",
     "you": "Du"
+  },
+  "map": {
+    "title": "Karta",
+    "count": "{count} / 31",
+    "mapLabel": "Karta som visar var nationalparkerna är placerade i Sverige",
+    "legendVisited": "Nålade",
+    "legendTodo": "Inte än"
   },
   "parks": {
     "title": "ParkPass",

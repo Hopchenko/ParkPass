@@ -5,8 +5,16 @@
   },
   "tabs": {
     "parks": "Parks",
+    "map": "Map",
     "board": "Pin board",
     "you": "You"
+  },
+  "map": {
+    "title": "Map",
+    "count": "{count} / 31",
+    "mapLabel": "Map showing where the national parks are located in Sweden",
+    "legendVisited": "Pinned",
+    "legendTodo": "Not yet"
   },
   "parks": {
     "title": "ParkPass",
