@@ -530,4 +530,5 @@ export const PIN_ARTWORK = new Set<string>([
   "sarek",
   "tiveden",
   "tyresta",
+  "vadvetjakka",
 ]);

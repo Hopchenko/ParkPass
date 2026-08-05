@@ -40,7 +40,10 @@
       "Bash(cp \"pin-images/tividens/final.png\" parkpass-web/public/pins/tiveden.png)",
       "Bash(sips -Z 360 parkpass-web/public/pins/kosterhavet.png)",
       "Bash(sips -Z 360 parkpass-web/public/pins/tiveden.png)",
-      "Bash(awk 'NR>1{print $5, $9}')"
+      "Bash(awk 'NR>1{print $5, $9}')",
+      "Bash(cp pin-images/vadvetjakka/final.png parkpass-web/public/pins/vadvetjakka.png)",
+      "Bash(cp pin-images/kosterhavet/final.png parkpass-web/public/pins/kosterhavet.png)",
+      "Bash(sips -Z 360 parkpass-web/public/pins/vadvetjakka.png)"
     ]
   }
 }
