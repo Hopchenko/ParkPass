@@ -33,7 +33,14 @@
       "Bash(curl -sL \"https://www.sverigesnationalparker.se/en/parks\" -o discover-en.html)",
       "Bash(node scripts/check-official-links.mjs)",
       "Bash(curl -sL \"https://www.sverigesnationalparker.se/en\" -o en-home.html)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(ssh-add -L)",
+      "Bash(awk '{print $6, $7, $8, $9}')",
+      "Bash(cp \"pin-images/kosterhavet/final.png\" parkpass-web/public/pins/kosterhavet.png)",
+      "Bash(cp \"pin-images/tividens/final.png\" parkpass-web/public/pins/tiveden.png)",
+      "Bash(sips -Z 360 parkpass-web/public/pins/kosterhavet.png)",
+      "Bash(sips -Z 360 parkpass-web/public/pins/tiveden.png)",
+      "Bash(awk 'NR>1{print $5, $9}')"
     ]
   }
 }

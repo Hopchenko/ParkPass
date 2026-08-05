@@ -525,4 +525,6 @@ export const PIN_ARTWORK = new Set<string>([
   "tyresta",
   "farnebofjarden",
   "fulufjallet",
+  "kosterhavet",
+  "tiveden",
 ]);
