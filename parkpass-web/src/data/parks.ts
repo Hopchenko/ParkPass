@@ -515,16 +515,19 @@ export const PARKS: Park[] = [
 export const PARK_COUNT = PARKS.length;
 
 /**
- * Parks with final pin artwork at /public/pins/{slug}.png. The rest fall back
- * to the generated glyph pin, so artwork can land one park at a time.
+ * Parks with final pin artwork at /public/pins/{slug}.png — sources live in
+ * /pin-images/{slug}/final.png, so folder, file and slug all share one name.
+ * The rest fall back to the generated glyph pin, so artwork can land one park
+ * at a time.
  */
 export const PIN_ARTWORK = new Set<string>([
   "abisko",
-  "sarek",
-  "gotska-sandon",
-  "tyresta",
+  "bla-jungfrun",
   "farnebofjarden",
   "fulufjallet",
+  "gotska-sandon",
   "kosterhavet",
+  "sarek",
   "tiveden",
+  "tyresta",
 ]);
