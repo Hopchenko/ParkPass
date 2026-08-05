@@ -519,6 +519,9 @@ export const PARK_COUNT = PARKS.length;
  * to the generated glyph pin, so artwork can land one park at a time.
  */
 export const PIN_ARTWORK = new Set<string>([
+  "abisko",
+  "sarek",
+  "gotska-sandon",
   "tyresta",
   "farnebofjarden",
   "fulufjallet",

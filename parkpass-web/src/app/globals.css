@@ -80,6 +80,22 @@
   }
 }
 
+/* A hand-pressed stamp: fades in slightly oversized, then slams down askew.
+   Scale stays modest so the mark never sprawls across the screen. */
+@keyframes stampPress {
+  0% {
+    opacity: 0;
+    transform: rotate(-2deg) scale(1.9);
+  }
+  55% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.85;
+    transform: rotate(-15deg) scale(1);
+  }
+}
+
 @keyframes popDot {
   0% {
     transform: translate(0, 0) scale(1);

@@ -5,13 +5,14 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PARKS } from "@/data/parks";
 import type { Locale } from "@/i18n/routing";
-import { useVisited } from "@/lib/visited";
+import { formatVisitDate, useVisited } from "@/lib/visited";
 import { PinBadge } from "./PinBadge";
 
 type Chip = "all" | "visited" | "todo";
 
 export function ParkList() {
   const t = useTranslations("parks");
+  const tDetail = useTranslations("detail");
   const locale = useLocale() as Locale;
   const { visited, count } = useVisited();
   const [query, setQuery] = useState("");
@@ -103,58 +104,56 @@ export function ParkList() {
 
       <div>
         {parks.map((p) => {
-          const isVisited = !!visited[p.slug];
+          const visitedDate = visited[p.slug];
           return (
             <Link
               key={p.slug}
               href={`/park/${p.slug}`}
-              className="flex min-h-[66px] items-center gap-3.5 border-b border-divider px-[18px] py-2.5 hover:bg-neutral-100"
+              className="flex items-center gap-4 border-b border-divider px-[18px] py-3 hover:bg-neutral-100"
             >
               <PinBadge
                 glyph={p.glyph}
                 color={p.color}
                 slug={p.slug}
-                size={54}
+                size={100}
                 strokeWidth={2.6}
                 className="flex-none"
-                style={isVisited ? undefined : { filter: "grayscale(1) opacity(.38)" }}
+                style={visitedDate ? undefined : { filter: "grayscale(1) opacity(.38)" }}
               />
               <div className="min-w-0 flex-1">
-                <div className="text-[15px] font-bold">{p.name}</div>
-                <div className="mt-0.5 text-[12.5px] text-neutral-600">
+                <div className="text-[18px] font-bold leading-tight">{p.name}</div>
+                {p.sami && (
+                  <div className="mt-0.5 text-[13px] italic text-neutral-500">
+                    {p.sami}
+                  </div>
+                )}
+                <div className="mt-1 text-[13px] leading-snug text-neutral-600">
                   {t("meta", {
                     region: p.region[locale],
                     year: String(p.year),
                     area: fmt.format(p.area),
                   })}
                 </div>
+                {visitedDate && (
+                  <div className="mt-1.5 flex items-center gap-1 text-[12.5px] font-semibold text-sage-700">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    {tDetail("pinned", {
+                      date: formatVisitDate(visitedDate, locale),
+                    })}
+                  </div>
+                )}
               </div>
-              {isVisited && (
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--color-sage-600)"
-                  strokeWidth="2.75"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              )}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="var(--color-neutral-400)"
-                strokeWidth="2.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
             </Link>
           );
         })}

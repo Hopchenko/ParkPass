@@ -33,6 +33,8 @@
     "pinIt": "I've been here — pin it!",
     "pinned": "Pinned {date}",
     "undo": "Undo",
+    "stampVisited": "VISITED",
+    "stampAlt": "Stamp: visited {date}",
     "official": "Plan a trip on the official site ↗",
     "disclaimer": "Unofficial tracker — not affiliated with Naturvårdsverket."
   },

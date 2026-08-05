@@ -8,6 +8,7 @@ import { formatVisitDate, useVisited } from "@/lib/visited";
 import { BackLink } from "./BackLink";
 import { ConfettiBurst } from "./ConfettiBurst";
 import { PinBadge } from "./PinBadge";
+import { VisitStamp } from "./VisitStamp";
 
 export function ParkDetail({ park }: { park: Park }) {
   const t = useTranslations("detail");
@@ -40,12 +41,12 @@ export function ParkDetail({ park }: { park: Park }) {
   const fmt = new Intl.NumberFormat(locale === "sv" ? "sv-SE" : "en-GB");
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col">
       <div className="px-2.5 pt-1.5">
         <BackLink />
       </div>
 
-      <div className="px-6 pb-7">
+      <div className="flex flex-1 flex-col px-6 pb-7">
         <div className="relative flex justify-center pt-2 pb-1">
           <div
             style={{
@@ -59,7 +60,7 @@ export function ParkDetail({ park }: { park: Park }) {
               glyph={park.glyph}
               color={park.color}
               slug={park.slug}
-              size={184}
+              size={210}
               strokeWidth={2.4}
             />
           </div>
@@ -91,8 +92,12 @@ export function ParkDetail({ park }: { park: Park }) {
           {park.description[locale]}
         </p>
 
-        {visitedDate ? (
-          <div className="mb-3 flex items-center justify-center gap-2.5 rounded-md bg-sage-200 px-4 py-3.5">
+        {/* One fixed-height slot shared by both states: the pin button and the
+            pinned card have different natural heights, so letting either size
+            the container would jump the page on every toggle. */}
+        <div className="mb-3 flex h-[60px]">
+          {visitedDate ? (
+            <div className="flex w-full items-center justify-center gap-2.5 rounded-md bg-sage-200 px-4">
             <svg
               width="22"
               height="22"
@@ -114,15 +119,16 @@ export function ParkDetail({ park }: { park: Park }) {
             >
               {t("undo")}
             </button>
-          </div>
-        ) : (
-          <button
-            onClick={handleMark}
-            className="mb-3 flex min-h-[52px] w-full cursor-pointer items-center justify-center rounded-full bg-accent px-4 font-heading text-[16px] text-ground hover:bg-accent-600 active:bg-accent-700"
-          >
-            {t("pinIt")}
-          </button>
-        )}
+            </div>
+          ) : (
+            <button
+              onClick={handleMark}
+              className="flex w-full cursor-pointer items-center justify-center rounded-full bg-accent px-4 font-heading text-[16px] text-ground hover:bg-accent-600 active:bg-accent-700"
+            >
+              {t("pinIt")}
+            </button>
+          )}
+        </div>
 
         <a
           href={officialUrl(park.slug, locale)}
@@ -133,7 +139,17 @@ export function ParkDetail({ park }: { park: Park }) {
           {t("official")}
         </a>
 
-        <p className="mt-[18px] text-center text-[11.5px] text-neutral-500">
+        {/* Height is reserved whether or not the park is stamped, so marking a
+            visit never shifts the page. overflow-x-clip stops the animation's
+            overshoot from widening the page (clip, not hidden — it must not
+            become a scroll container). */}
+        <div className="flex h-[172px] items-center justify-end overflow-x-clip pr-1">
+          {visitedDate && <VisitStamp iso={visitedDate} animate={stamped} />}
+        </div>
+
+        {/* mt-auto pins this to the bottom of the page, clear of the stamp's
+            animation so it isn't painted over mid-press. */}
+        <p className="mt-auto pt-8 text-center text-[11.5px] text-neutral-500">
           {t("disclaimer")}
         </p>
       </div>

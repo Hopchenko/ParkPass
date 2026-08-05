@@ -32,7 +32,7 @@ export function PinBoard() {
         >
           {/* Fabric surface */}
           <div
-            className="rounded-md px-3 pt-5 pb-[22px]"
+            className="rounded-md px-2 pt-5 pb-[22px]"
             style={{
               background:
                 "url('/pinboard-fabric.avif') center / 280px repeat, #3a4a28",
@@ -40,21 +40,22 @@ export function PinBoard() {
                 "inset 0 3px 12px rgba(0,0,0,.5), inset 0 -1px 3px rgba(255,255,255,.08)",
             }}
           >
-            <div className="grid grid-cols-3 gap-x-2.5 gap-y-[18px]">
+            <div className="grid grid-cols-3 gap-x-1.5 gap-y-[18px]">
               {PARKS.map((p) => {
                 const isVisited = !!visited[p.slug];
                 return (
                   <Link
                     key={p.slug}
                     href={`/park/${p.slug}?from=board`}
-                    className="flex flex-col items-center gap-[7px] px-0.5 py-1.5"
+                    className="flex flex-col items-center gap-[7px] py-1.5"
                   >
+                    {/* Fluid: fills the grid column, so pins grow with the viewport. */}
                     <PinBadge
                       glyph={p.glyph}
                       color={p.color}
                       slug={p.slug}
-                      size={88}
-                      className="flex-none"
+                      size={96}
+                      className="h-auto w-full"
                       style={{
                         filter: isVisited
                           ? "drop-shadow(0 3px 3px rgba(0,0,0,.4))"

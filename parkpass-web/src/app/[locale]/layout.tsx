@@ -50,7 +50,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <VisitedProvider>
             <div className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-ground shadow-lg">
-              <main className="flex-1 pb-[84px]">{children}</main>
+              <main className="flex flex-1 flex-col pb-[84px]">{children}</main>
             </div>
             <TabBar />
           </VisitedProvider>

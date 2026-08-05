@@ -33,6 +33,8 @@
     "pinIt": "Jag har varit här — nåla fast!",
     "pinned": "Nålad {date}",
     "undo": "Ångra",
+    "stampVisited": "BESÖKT",
+    "stampAlt": "Stämpel: besökt {date}",
     "official": "Planera din tur på officiella webbplatsen ↗",
     "disclaimer": "Inofficiell tjänst — ej kopplad till Naturvårdsverket."
   },
