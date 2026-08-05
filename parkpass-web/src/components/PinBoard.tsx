@@ -46,13 +46,14 @@ export function PinBoard() {
                 return (
                   <Link
                     key={p.slug}
-                    href={`/park/${p.slug}`}
+                    href={`/park/${p.slug}?from=board`}
                     className="flex flex-col items-center gap-[7px] px-0.5 py-1.5"
                   >
                     <PinBadge
                       glyph={p.glyph}
                       color={p.color}
-                      size={74}
+                      slug={p.slug}
+                      size={88}
                       className="flex-none"
                       style={{
                         filter: isVisited

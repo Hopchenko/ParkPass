@@ -113,7 +113,8 @@ export function ParkList() {
               <PinBadge
                 glyph={p.glyph}
                 color={p.color}
-                size={46}
+                slug={p.slug}
+                size={54}
                 strokeWidth={2.6}
                 className="flex-none"
                 style={isVisited ? undefined : { filter: "grayscale(1) opacity(.38)" }}

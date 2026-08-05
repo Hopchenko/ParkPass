@@ -24,7 +24,25 @@ export function SwedenMap() {
         </span>
       </div>
 
-      <div className="px-8 pb-4">
+      <div className="relative px-8 pb-4">
+        {/* Sits over the empty north-west of the map, so it reads without scrolling. */}
+        <div className="absolute left-5 top-1 z-10 flex flex-col gap-1.5 rounded-md bg-ground/80 px-3 py-2 text-[12.5px] text-neutral-700 backdrop-blur-[2px]">
+          <span className="flex items-center gap-1.5">
+            <span
+              className="inline-block h-3 w-3 rounded-full"
+              style={{ background: "var(--color-accent)" }}
+            />
+            {t("legendVisited")}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span
+              className="inline-block h-3 w-3 rounded-full"
+              style={{ background: "var(--color-sage-400)" }}
+            />
+            {t("legendTodo")}
+          </span>
+        </div>
+
         <svg
           viewBox={MAP_VIEWBOX}
           className="h-auto w-full"
@@ -53,11 +71,11 @@ export function SwedenMap() {
                   tabIndex={0}
                   aria-label={park.name}
                   className="cursor-pointer transition-[fill-opacity] hover:fill-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-                  onClick={() => router.push(`/park/${slug}`)}
+                  onClick={() => router.push(`/park/${slug}?from=map`)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      router.push(`/park/${slug}`);
+                      router.push(`/park/${slug}?from=map`);
                     }
                   }}
                 >
@@ -69,22 +87,6 @@ export function SwedenMap() {
         </svg>
       </div>
 
-      <div className="flex items-center justify-center gap-5 pb-5 text-[12.5px] text-neutral-700">
-        <span className="flex items-center gap-1.5">
-          <span
-            className="inline-block h-3 w-3 rounded-full"
-            style={{ background: "var(--color-accent)" }}
-          />
-          {t("legendVisited")}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span
-            className="inline-block h-3 w-3 rounded-full"
-            style={{ background: "var(--color-sage-400)" }}
-          />
-          {t("legendTodo")}
-        </span>
-      </div>
     </div>
   );
 }

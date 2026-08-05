@@ -513,3 +513,13 @@ export const PARKS: Park[] = [
 ];
 
 export const PARK_COUNT = PARKS.length;
+
+/**
+ * Parks with final pin artwork at /public/pins/{slug}.png. The rest fall back
+ * to the generated glyph pin, so artwork can land one park at a time.
+ */
+export const PIN_ARTWORK = new Set<string>([
+  "tyresta",
+  "farnebofjarden",
+  "fulufjallet",
+]);

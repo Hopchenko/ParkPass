@@ -28,7 +28,6 @@
     "noResults": "No parks match — try \"Lapland\" or \"Skåne\"."
   },
   "detail": {
-    "back": "Parks",
     "est": "Est. {year}",
     "area": "{area} km²",
     "pinIt": "I've been here — pin it!",

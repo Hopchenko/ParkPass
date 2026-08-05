@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from "react";
-import { COLORS, GLYPHS, type Glyph } from "@/data/parks";
+import { COLORS, GLYPHS, PIN_ARTWORK, type Glyph } from "@/data/parks";
 
 /** Pointy-top hexagon centred in the 64×64 viewBox, matching the map's hexes. */
 function hexPoints(radius: number): string {
@@ -11,13 +11,26 @@ function hexPoints(radius: number): string {
   }).join(" ");
 }
 
-const RIM = hexPoints(30);
-const ENAMEL = hexPoints(24);
+const RIM_R = 30;
+const ENAMEL_R = 26;
+
+const RIM = hexPoints(RIM_R);
+const ENAMEL = hexPoints(ENAMEL_R);
+
+/** Bounding box of the enamel hexagon — artwork is scaled to cover this. */
+const ART = {
+  x: 32 - ENAMEL_R * Math.cos(Math.PI / 6),
+  y: 32 - ENAMEL_R,
+  w: 2 * ENAMEL_R * Math.cos(Math.PI / 6),
+  h: 2 * ENAMEL_R,
+};
 
 type Props = {
   glyph: Glyph;
   color: number;
   size: number;
+  /** When this park has final artwork, it replaces the glyph. */
+  slug?: string;
   strokeWidth?: number;
   style?: CSSProperties;
   className?: string;
@@ -32,13 +45,16 @@ export function PinBadge({
   glyph,
   color,
   size,
+  slug,
   strokeWidth = 2.5,
   style,
   className,
 }: Props) {
   const c = COLORS[color % COLORS.length];
-  // Gradient ids must be unique — the pin board renders 31 of these at once.
+  // Ids must be unique — the pin board renders 31 of these at once.
   const goldId = useId();
+  const clipId = useId();
+  const hasArt = !!slug && PIN_ARTWORK.has(slug);
 
   return (
     <svg
@@ -57,32 +73,52 @@ export function PinBadge({
           <stop offset="80%" stopColor="var(--color-gold-600)" />
           <stop offset="100%" stopColor="var(--color-gold-800)" />
         </linearGradient>
+        {hasArt && (
+          <clipPath id={clipId}>
+            <polygon points={ENAMEL} />
+          </clipPath>
+        )}
       </defs>
 
       <polygon points={RIM} fill={`url(#${goldId})`} />
-      <polygon
-        points={ENAMEL}
-        fill={c.light}
-        stroke="var(--color-gold-700)"
-        strokeWidth="1"
-      />
-      <path
-        d={GLYPHS[glyph]}
-        transform="translate(17.5,17.5) scale(1.2)"
-        fill="none"
-        stroke={c.dark}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <ellipse
-        cx="23"
-        cy="16"
-        rx="10"
-        ry="4.5"
-        fill="rgba(255,255,255,.4)"
-        transform="rotate(-28 23 16)"
-      />
+
+      {hasArt ? (
+        <>
+          <image
+            href={`/pins/${slug}.png`}
+            x={ART.x}
+            y={ART.y}
+            width={ART.w}
+            height={ART.h}
+            preserveAspectRatio="xMidYMid slice"
+            clipPath={`url(#${clipId})`}
+          />
+          <polygon
+            points={ENAMEL}
+            fill="none"
+            stroke="var(--color-gold-700)"
+            strokeWidth="0.7"
+          />
+        </>
+      ) : (
+        <>
+          <polygon
+            points={ENAMEL}
+            fill={c.light}
+            stroke="var(--color-gold-700)"
+            strokeWidth="0.7"
+          />
+          <path
+            d={GLYPHS[glyph]}
+            transform="translate(17.5,17.5) scale(1.2)"
+            fill="none"
+            stroke={c.dark}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </>
+      )}
     </svg>
   );
 }
