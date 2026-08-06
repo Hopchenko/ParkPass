@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:links": "node scripts/check-official-links.mjs"
+    "check:links": "node scripts/check-official-links.mjs",
+    "build:pins": "node scripts/pins-to-webp.mjs"
   },
   "dependencies": {
     "next": "16.2.11",
@@ -22,6 +23,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

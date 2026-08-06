@@ -85,7 +85,7 @@ export function PinBadge({
       {hasArt ? (
         <>
           <image
-            href={`/pins/${slug}.png`}
+            href={`/pins/${slug}.webp`}
             x={ART.x}
             y={ART.y}
             width={ART.w}

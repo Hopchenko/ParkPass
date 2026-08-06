@@ -515,8 +515,9 @@ export const PARKS: Park[] = [
 export const PARK_COUNT = PARKS.length;
 
 /**
- * Parks with final pin artwork at /public/pins/{slug}.png — sources live in
+ * Parks with final pin artwork at /public/pins/{slug}.webp — sources live in
  * /pin-images/{slug}/final.png, so folder, file and slug all share one name.
+ * Run `npm run build:pins` to regenerate the webp files after adding artwork.
  * The rest fall back to the generated glyph pin, so artwork can land one park
  * at a time.
  */
