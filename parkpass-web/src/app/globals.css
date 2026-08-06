@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Organic design-system tokens — ported from design_handoff_parkpass/design-system/styles.css */
+/* Organic design-system tokens — ported from design/handoff/design-system/styles.css */
 @theme {
   --color-ground: #f5ead8;
   --color-surface: #ebddc5;
