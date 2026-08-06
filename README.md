@@ -49,6 +49,7 @@ npm run build        # production build
 npm run lint         # eslint
 npm run check:links  # verify all 62 official park links (31 parks × sv/en) still resolve
 npm run build:pins   # rebuild public/pins/*.webp from the pin-images/ artwork
+npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 ```
 
 `build:pins` encodes near-lossless rather than lossy: the artwork's thin cream outlines sit on flat colour, and WebP's chroma subsampling greys them out at any lossy quality. Near-lossless still halves the pin board's page weight.

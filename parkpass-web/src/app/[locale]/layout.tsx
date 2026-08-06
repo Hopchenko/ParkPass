@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site";
 import { VisitedProvider } from "@/lib/visited";
 import { TabBar } from "@/components/TabBar";
 import "../globals.css";
@@ -30,7 +31,28 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("title"), description: t("description") };
+  const title = t("title");
+  const description = t("description");
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    icons: { apple: "/icons/icon-180.png" },
+    openGraph: {
+      title,
+      description,
+      siteName: "ParkPass",
+      type: "website",
+      locale: locale === "sv" ? "sv_SE" : "en_GB",
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: "ParkPass" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/og.png"],
+    },
+  };
 }
 
 export default async function LocaleLayout({

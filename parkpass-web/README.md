@@ -12,4 +12,5 @@ npm run build        # production build
 npm run lint         # eslint
 npm run check:links  # verify the 62 official park links still resolve
 npm run build:pins   # rebuild public/pins/*.webp from ../pin-images/
+npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 ```
