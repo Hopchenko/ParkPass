@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Night mountain landscape with aurora, crescent moon and stars">
+  <!-- Palette
+       Sky:        #1B2A4A
+       Mountains:  #7A7E86
+       Aurora mint:#B8D4B0
+       Aurora teal:#3AA8A0
+       Cream/metal:#EAD9B6
+  -->
+
+  <!-- Sky -->
+  <rect x="0" y="0" width="1000" height="1000" fill="#1B2A4A"/>
+
+  <!-- Stars -->
+  <g fill="#EAD9B6">
+    <circle cx="88" cy="62" r="5"/>
+    <circle cx="168" cy="138" r="4.5"/>
+    <circle cx="248" cy="48" r="5"/>
+    <circle cx="318" cy="118" r="4"/>
+    <circle cx="405" cy="38" r="5"/>
+    <circle cx="485" cy="92" r="4.5"/>
+    <circle cx="555" cy="48" r="4"/>
+    <circle cx="638" cy="108" r="5"/>
+    <circle cx="718" cy="42" r="4.5"/>
+    <circle cx="798" cy="128" r="4"/>
+    <circle cx="875" cy="58" r="5"/>
+    <circle cx="935" cy="148" r="4"/>
+    <circle cx="130" cy="220" r="4"/>
+    <circle cx="295" cy="205" r="4.5"/>
+    <circle cx="455" cy="178" r="4"/>
+    <circle cx="615" cy="215" r="4.5"/>
+    <circle cx="755" cy="188" r="4"/>
+    <circle cx="905" cy="225" r="4"/>
+  </g>
+
+  <!-- Aurora: top mint band -->
+  <path
+    fill="#B8D4B0"
+    stroke="#EAD9B6"
+    stroke-width="7"
+    stroke-linejoin="round"
+    d="M0 88
+       C95 58 175 118 270 88
+       C365 58 445 122 540 92
+       C635 62 715 120 810 90
+       C885 70 945 105 1000 88
+       L1000 148
+       C945 165 885 130 810 150
+       C715 180 635 122 540 152
+       C445 182 365 118 270 148
+       C175 178 95 118 0 148
+       Z"/>
+
+  <!-- Aurora: bottom teal band -->
+  <path
+    fill="#3AA8A0"
+    stroke="#EAD9B6"
+    stroke-width="7"
+    stroke-linejoin="round"
+    d="M0 148
+       C95 118 175 178 270 148
+       C365 118 445 182 540 152
+       C635 122 715 180 810 150
+       C885 130 945 165 1000 148
+       L1000 210
+       C945 228 885 192 810 212
+       C715 242 635 185 540 215
+       C445 245 365 180 270 210
+       C175 240 95 180 0 210
+       Z"/>
+
+  <!-- Crescent moon (opening left) -->
+  <path
+    fill="#EAD9B6"
+    d="M512 292
+       A68 68 0 1 1 512 428
+       A46 46 0 1 0 512 292
+       Z"/>
+
+  <!-- Midground mountain range -->
+  <path
+    fill="#7A7E86"
+    stroke="#EAD9B6"
+    stroke-width="7"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    d="M0 640
+       L55 575
+       L120 600
+       L185 515
+       L250 535
+       L305 470
+       L360 485
+       L405 445
+       L455 470
+       L505 395
+       L555 440
+       L610 375
+       L670 415
+       L740 350
+       L800 390
+       L860 330
+       L920 370
+       L1000 310
+       L1000 720
+       L0 720
+       Z"/>
+
+  <!-- Snow patches -->
+  <g fill="#EAD9B6">
+    <path d="M295 472 L348 458 L372 480 L342 492 L302 485 Z"/>
+    <path d="M358 490 L398 478 L418 498 L388 508 Z"/>
+    <path d="M720 358 L770 332 L805 365 L772 382 L728 372 Z"/>
+  </g>
+
+  <!-- Foreground left hill -->
+  <path
+    fill="#7A7E86"
+    stroke="#EAD9B6"
+    stroke-width="7"
+    stroke-linejoin="round"
+    d="M0 740
+       C140 655 280 675 430 755
+       C500 800 545 870 560 1000
+       L0 1000
+       Z"/>
+
+  <!-- Foreground right hill -->
+  <path
+    fill="#7A7E86"
+    stroke="#EAD9B6"
+    stroke-width="7"
+    stroke-linejoin="round"
+    d="M500 1000
+       C540 820 680 690 820 665
+       C900 650 960 675 1000 705
+       L1000 1000
+       Z"/>
+</svg>

@@ -38,7 +38,7 @@ export const COLORS = [
  * Path segments on sverigesnationalparker.se, per locale. Swedish uses genitive
  * forms ("tivedens") and English doesn't, and the three parks with Sámi names
  * concatenate both — so these are transcribed from the official site's own
- * listings rather than derived. Verified with scripts/check-official-links.sh.
+ * listings rather than derived. Verified with scripts/check-official-links.mjs.
  */
 const OFFICIAL_SLUGS: Record<string, { sv: string; en: string }> = {
   abisko: { sv: "abisko-nationalpark", en: "abisko-national-park" },

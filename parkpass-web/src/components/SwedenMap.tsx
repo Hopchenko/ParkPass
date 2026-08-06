@@ -70,7 +70,7 @@ export function SwedenMap() {
                   role="link"
                   tabIndex={0}
                   aria-label={park.name}
-                  className="cursor-pointer transition-[fill-opacity] hover:fill-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                  className="cursor-pointer transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                   onClick={() => router.push(`/park/${slug}?from=map`)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {

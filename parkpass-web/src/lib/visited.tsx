@@ -44,7 +44,19 @@ function write(next: VisitedMap) {
   listeners.forEach((listener) => listener());
 }
 
+let storageBound = false;
+
 function subscribe(listener: () => void) {
+  // Another tab (or devtools) writing the key would otherwise go unseen —
+  // this cache would then clobber it on the next mark/unmark here.
+  if (!storageBound) {
+    storageBound = true;
+    window.addEventListener("storage", (e) => {
+      if (e.key !== STORAGE_KEY && e.key !== null) return;
+      cache = null;
+      listeners.forEach((l) => l());
+    });
+  }
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
@@ -65,7 +77,10 @@ export function VisitedProvider({ children }: { children: ReactNode }) {
   const visited = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const mark = useCallback((slug: string) => {
-    write({ ...load(), [slug]: new Date().toISOString().slice(0, 10) });
+    // Local date, not toISOString() — that is UTC, which would stamp
+    // "yesterday" for a pin made before 01:00/02:00 Swedish time.
+    // sv-SE happens to format as YYYY-MM-DD.
+    write({ ...load(), [slug]: new Date().toLocaleDateString("sv-SE") });
   }, []);
 
   const unmark = useCallback((slug: string) => {
