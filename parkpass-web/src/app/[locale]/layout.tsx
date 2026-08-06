@@ -44,13 +44,13 @@ export async function generateMetadata({
       siteName: "ParkPass",
       type: "website",
       locale: locale === "sv" ? "sv_SE" : "en_GB",
-      images: [{ url: "/og.png", width: 1200, height: 630, alt: "ParkPass" }],
+      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ParkPass" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/og.png"],
+      images: ["/og.jpg"],
     },
   };
 }

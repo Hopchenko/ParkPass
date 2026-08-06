@@ -8,7 +8,13 @@
  *   public/icons/icon-512.png           launcher icon
  *   public/icons/icon-180.png           apple-touch-icon
  *   public/icons/icon-512-maskable.png  artwork inset to the 80% safe area
- *   public/og.png                       1200x630 social card
+ *   public/og.jpg                       1200x630 social card
+ *
+ * The icons stay PNG: palette-quantising them dithers the artwork's cream
+ * linework, and they are fetched on install rather than per page load, so
+ * the weight does not sit in the critical path. The OG card is JPEG — at
+ * this size the wordmark shows no ringing, and it saves ~240KB on a file
+ * every social scraper pulls.
  *
  * Run: npm run build:icons
  */
@@ -20,7 +26,7 @@ const SOURCE = fileURLToPath(
   new URL("../../pin-images/abisko/final.png", import.meta.url),
 );
 const ICONS = new URL("../public/icons/", import.meta.url);
-const OG = fileURLToPath(new URL("../public/og.png", import.meta.url));
+const OG = fileURLToPath(new URL("../public/og.jpg", import.meta.url));
 
 const GROUND = "#f5ead8";
 const INK = "#201e1d";
@@ -70,7 +76,7 @@ await sharp(Buffer.from(text))
       top: 80,
     },
   ])
-  .png()
+  .jpeg({ quality: 90 })
   .toFile(OG);
 
-console.log("Wrote 4 icons and og.png");
+console.log("Wrote 4 icons and og.jpg");
