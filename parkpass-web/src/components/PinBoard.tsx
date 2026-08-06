@@ -35,7 +35,7 @@ export function PinBoard() {
             className="rounded-md px-2 pt-5 pb-[22px]"
             style={{
               background:
-                "url('/pinboard-fabric.avif') center / 280px repeat, #3a4a28",
+                "url('/pinboard-fabric-seamless.webp') center / 280px repeat, #3a4a28",
               boxShadow:
                 "inset 0 3px 12px rgba(0,0,0,.5), inset 0 -1px 3px rgba(255,255,255,.08)",
             }}
