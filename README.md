@@ -16,6 +16,7 @@ Web app first, with a mobile app planned. See [docs/PLAN.md](docs/PLAN.md) for t
 - **You** — progress toward all 31, plus the diploma the official checklist offers
 - **Swedish and English** — Swedish by default, English at `/en`
 - **No account needed** — progress is stored locally in your browser; no location permissions, ever
+- **Transfer codes** — move your whole board to another device by pasting one code, no sign-up and no server
 
 ## Tech stack
 
@@ -24,7 +25,7 @@ Web app first, with a mobile app planned. See [docs/PLAN.md](docs/PLAN.md) for t
 | Framework | Next.js 16 (App Router) + TypeScript |
 | Styling | Tailwind CSS 4, with design tokens from the "Organic" design system |
 | i18n | next-intl — Swedish (default) and English |
-| Storage | `localStorage`, local-first (Supabase sync is in progress, see [Status](#status)) |
+| Storage | `localStorage` only — no backend; moving between devices uses [transfer codes](#transfer-codes) |
 | Hosting | Vercel |
 
 ## Getting started
@@ -84,11 +85,25 @@ npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 
 Deployed on Vercel from `main`. **The app is not at the repo root**, so the Vercel project's **Root Directory** must be set to `parkpass-web` — otherwise the build finds no framework and every route 404s.
 
+## Transfer codes
+
+Moving a board to a new device needs no account. The **You** tab renders the whole board as one code:
+
+```
+PARKPASS-3ZZZ-ZZZ2-4G4D-M94G-JVH6-W2G2-54RA-JRNR-1CN2-VM5V-…
+```
+
+Paste it on the other device and the pins arrive with their visit dates intact. Importing **merges** — it is never destructive, and where both devices have the same park the earlier visit date wins.
+
+The encoding lives in [`src/lib/passcode.ts`](parkpass-web/src/lib/passcode.ts): a 4-bit version, a 31-bit presence bitmap over a frozen park order, then a 14-bit day offset per pinned park, Crockford-base32'd with a CRC-16 checksum. Codes run ~20 characters for one pin to ~130 for all 31.
+
+Two invariants keep old codes readable: `CODE_ORDER` is **append-only** (it is positional — reordering it redirects existing codes to the wrong parks), and a 32nd park means adding a *new* entry to `BITMAP_WIDTH` rather than widening version 1.
+
 ## Status
 
-Shipped: parks list, park detail, map, pin board, progress, Swedish/English. The pin badges are generated placeholders for now — final per-park enamel-pin artwork drops into the same slots.
+Shipped: parks list, park detail, map, pin board, progress, transfer codes, Swedish/English. The pin badges are generated placeholders for now — final per-park enamel-pin artwork drops into the same slots.
 
-In progress on the `feature/supabase-auth` branch: accounts via Google sign-in and passwordless magic links, so progress syncs across devices. It's parked pending Google OAuth setup — see the branch's pull request for the remaining steps.
+Accounts are no longer on the critical path — transfer codes cover cross-device moves with zero infrastructure. The `feature/supabase-auth` branch (Google sign-in and magic links) remains parked pending Google OAuth setup.
 
 Next up: visit notes, achievements, real per-park pin artwork, and the mobile app.
 

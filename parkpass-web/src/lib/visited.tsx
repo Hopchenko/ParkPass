@@ -64,11 +64,21 @@ function subscribe(listener: () => void) {
 const getSnapshot = () => load();
 const getServerSnapshot = () => EMPTY;
 
+/**
+ * Local date, not toISOString() — that is UTC, which would stamp "yesterday"
+ * for a pin made before 01:00/02:00 Swedish time. sv-SE happens to format as
+ * YYYY-MM-DD.
+ */
+export function todayISO(): string {
+  return new Date().toLocaleDateString("sv-SE");
+}
+
 type VisitedContextValue = {
   visited: VisitedMap;
   count: number;
   mark: (slug: string) => void;
   unmark: (slug: string) => void;
+  merge: (incoming: VisitedMap) => { added: number; updated: number };
 };
 
 const VisitedContext = createContext<VisitedContextValue | null>(null);
@@ -77,10 +87,7 @@ export function VisitedProvider({ children }: { children: ReactNode }) {
   const visited = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const mark = useCallback((slug: string) => {
-    // Local date, not toISOString() — that is UTC, which would stamp
-    // "yesterday" for a pin made before 01:00/02:00 Swedish time.
-    // sv-SE happens to format as YYYY-MM-DD.
-    write({ ...load(), [slug]: new Date().toLocaleDateString("sv-SE") });
+    write({ ...load(), [slug]: todayISO() });
   }, []);
 
   const unmark = useCallback((slug: string) => {
@@ -89,14 +96,38 @@ export function VisitedProvider({ children }: { children: ReactNode }) {
     write(next);
   }, []);
 
+  /**
+   * Union, never a replacement — importing a transfer code must not be able to
+   * destroy pins this device already has. On a collision the earlier visit
+   * wins, since that is the one that actually happened first (ISO yyyy-mm-dd
+   * sorts chronologically as a plain string).
+   */
+  const merge = useCallback((incoming: VisitedMap) => {
+    const next = { ...load() };
+    let added = 0;
+    let updated = 0;
+    for (const [slug, date] of Object.entries(incoming)) {
+      const existing = next[slug];
+      if (existing === undefined) {
+        next[slug] = date;
+        added++;
+      } else if (date < existing) {
+        next[slug] = date;
+        updated++;
+      }
+    }
+    if (added || updated) write(next);
+    return { added, updated };
+  }, []);
+
   const count = useMemo(
     () => PARKS.reduce((n, p) => n + (visited[p.slug] ? 1 : 0), 0),
     [visited],
   );
 
   const value = useMemo(
-    () => ({ visited, count, mark, unmark }),
-    [visited, count, mark, unmark],
+    () => ({ visited, count, mark, unmark, merge }),
+    [visited, count, mark, unmark, merge],
   );
 
   return (

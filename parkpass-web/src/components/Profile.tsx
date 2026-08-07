@@ -1,17 +1,76 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PARK_COUNT } from "@/data/parks";
+import { decodeVisits, encodeVisits, type DecodeError } from "@/lib/passcode";
 import { useVisited } from "@/lib/visited";
 
 const OFFICIAL_CHECKLIST_URL =
   "https://www.sverigesnationalparker.se/inspiration-och-kunskap/krysslista";
 
+const ERROR_KEY: Record<DecodeError, string> = {
+  empty: "errorEmpty",
+  charset: "errorCharset",
+  length: "errorLength",
+  checksum: "errorChecksum",
+  version: "errorVersion",
+};
+
 export function Profile() {
   const t = useTranslations("you");
   const locale = useLocale();
-  const { count } = useVisited();
+  const { count, visited, merge } = useVisited();
+
+  const [draft, setDraft] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(
+    null,
+  );
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+    };
+  }, []);
+
+  // No pins yet means no code worth showing — an empty one transfers nothing.
+  const code = useMemo(
+    () => (count > 0 ? encodeVisits(visited) : null),
+    [count, visited],
+  );
+
+  const handleCopy = async () => {
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Denied permission or a non-secure origin — the code is selectable.
+      setStatus({ ok: false, text: t("copyFailed") });
+    }
+  };
+
+  const handleImport = () => {
+    const result = decodeVisits(draft);
+    if (!result.ok) {
+      setStatus({ ok: false, text: t(ERROR_KEY[result.error]) });
+      return;
+    }
+    const { added, updated } = merge(result.visits);
+    const parts: string[] = [];
+    if (added) parts.push(t("importedPins", { count: added }));
+    if (updated) parts.push(t("importedDates", { count: updated }));
+    setStatus({
+      ok: true,
+      text: parts.length ? parts.join(" ") : t("importedNothing"),
+    });
+    setDraft("");
+  };
 
   const pct = Math.round((count / PARK_COUNT) * 100);
   const remaining = PARK_COUNT - count;
@@ -54,16 +113,66 @@ export function Profile() {
       </div>
 
       <div className="flex flex-col gap-2.5 rounded-[32px] bg-surface px-5 py-[18px]">
-        <div className="text-[15px] font-extrabold">{t("syncTitle")}</div>
+        <div className="text-[15px] font-extrabold">{t("transferTitle")}</div>
         <div className="text-[13.5px] leading-[1.5] text-neutral-700">
-          {t("syncBody")}
+          {t("transferBody")}
         </div>
-        <button
-          disabled
-          className="mt-1 flex min-h-[48px] w-full items-center justify-center rounded-full border border-divider font-heading text-[14px] text-ink opacity-60"
+
+        {code ? (
+          <>
+            <div className="mt-1 text-[11.5px] font-bold tracking-[0.06em] text-neutral-600 uppercase">
+              {t("yourCode")}
+            </div>
+            <code className="rounded-md bg-neutral-100 px-3 py-2.5 font-mono text-[12.5px] leading-[1.6] break-words text-neutral-800 select-all">
+              {code}
+            </code>
+            <button
+              onClick={handleCopy}
+              className="flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-full border border-divider font-heading text-[14px] text-ink hover:bg-accent/10 active:bg-accent/18"
+            >
+              {copied ? t("copied") : t("copy")}
+            </button>
+          </>
+        ) : (
+          <div className="mt-1 text-[13px] text-neutral-600">{t("noCode")}</div>
+        )}
+
+        <div className="mt-1.5 h-px bg-divider" />
+
+        <label
+          htmlFor="transfer-code"
+          className="mt-0.5 text-[11.5px] font-bold tracking-[0.06em] text-neutral-600 uppercase"
         >
-          {t("signIn")}
+          {t("importLabel")}
+        </label>
+        <textarea
+          id="transfer-code"
+          rows={2}
+          value={draft}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            setStatus(null);
+          }}
+          placeholder={t("importPlaceholder")}
+          spellCheck={false}
+          autoCapitalize="characters"
+          autoCorrect="off"
+          className="resize-none rounded-md border border-divider bg-neutral-100 px-3 py-2.5 font-mono text-[12.5px] leading-[1.6] break-words text-neutral-800 placeholder:text-neutral-500"
+        />
+        <button
+          onClick={handleImport}
+          className="flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-full bg-accent font-heading text-[14px] text-ground hover:bg-accent-600 active:bg-accent-700"
+        >
+          {t("import")}
         </button>
+        {status && (
+          <div
+            role="status"
+            className={`text-[13px] leading-[1.5] ${status.ok ? "text-sage-800" : "text-accent-700"}`}
+          >
+            {status.text}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-center gap-2 text-[12.5px] text-neutral-600">
