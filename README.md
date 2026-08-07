@@ -2,7 +2,7 @@
 
 A checklist for Sweden's 31 national parks. Find a park, mark it visited, collect an enamel-pin badge for every one you've been to — and work your way toward the diploma Naturvårdsverket sends to anyone who visits all 31.
 
-Web app first, with a mobile app planned. See [docs/PLAN.md](docs/PLAN.md) for the full product plan and [docs/MOBILE.md](docs/MOBILE.md) for how mobile will land (same repo, PWA first).
+Web app first, installable as a PWA today. See [docs/PLAN.md](docs/PLAN.md) for the full product plan and [docs/MOBILE.md](docs/MOBILE.md) for how iOS and Android get built (same repo, Capacitor, verified static-export path).
 
 > **Unofficial project** — not affiliated with Naturvårdsverket or Sveriges Nationalparker. Park information is summarised from public sources and every park links out to its official page.
 
@@ -62,7 +62,7 @@ npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 ```
 ├── docs/
 │   ├── PLAN.md                # product plan: scope, roadmap, decisions
-│   ├── MOBILE.md              # decision: mobile apps live in this repo, staged plan
+│   ├── MOBILE.md              # how iOS/Android get built: Capacitor path + store notes
 │   └── LOVABLE_PROMPT.md      # historical: the original rebuild prompt
 ├── design/
 │   ├── handoff/               # design reference: HTML prototype + design tokens
