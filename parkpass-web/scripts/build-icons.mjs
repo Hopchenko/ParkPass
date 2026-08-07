@@ -85,6 +85,28 @@ const art = {
   h: 2 * ENAMEL_R,
 };
 
+/**
+ * The favicon crops into the artwork instead of showing all of it. At 16px the
+ * full scene — aurora, moon, ridgeline and trail — is more detail than 256
+ * pixels can hold and reads as noise. Zooming in trades detail for legible
+ * shapes; 1.5x keeps the moon and the aurora band readable while leaving the
+ * ridgeline in frame, where 2x cropped the composition down to two elements.
+ */
+const FAVICON_ZOOM = 1.5;
+const sourceMeta = await sharp(SOURCE).metadata();
+const FAVICON_CROP = (() => {
+  const aspect = art.w / art.h;
+  // Largest centred rect matching the art box's aspect, then zoomed into.
+  const w = Math.min(sourceMeta.width, sourceMeta.height * aspect) / FAVICON_ZOOM;
+  const h = w / aspect;
+  return {
+    left: Math.round((sourceMeta.width - w) / 2),
+    top: Math.round((sourceMeta.height - h) / 2),
+    width: Math.round(w),
+    height: Math.round(h),
+  };
+})();
+
 const badgeSvg = (px, artBase64) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" viewBox="0 0 ${VIEW} ${VIEW}">
   <defs>
@@ -112,15 +134,16 @@ const badgeSvg = (px, artBase64) =>
  * against the real pixel grid.
  */
 async function badgeAt(px) {
-  // Crop the artwork to the art box's aspect ratio at roughly this size, so
-  // the SVG can place it with preserveAspectRatio="none" — relying on the
-  // renderer to implement "slice" is what differs between resvg and librsvg.
   const supersample = 4;
   const artPng = await sharp(SOURCE)
+    .extract(FAVICON_CROP)
+    // Resizing the crop to the art box's exact aspect lets the SVG place it
+    // with preserveAspectRatio="none" — relying on the renderer to implement
+    // "slice" is what differs between resvg and librsvg.
     .resize(
       Math.max(2, Math.round((art.w * px * supersample) / VIEW)),
       Math.max(2, Math.round((art.h * px * supersample) / VIEW)),
-      { fit: "cover" },
+      { fit: "fill" },
     )
     .png()
     .toBuffer();
