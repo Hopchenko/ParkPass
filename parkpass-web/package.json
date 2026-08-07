@@ -2,6 +2,8 @@
   "name": "parkpass-web",
   "version": "0.1.0",
   "private": true,
+  "author": "Oleksii Hopchenko (https://github.com/Hopchenko)",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +11,7 @@
     "lint": "eslint",
     "check:links": "node scripts/check-official-links.mjs",
     "build:pins": "node scripts/pins-to-webp.mjs",
+    "stamp:copyright": "node scripts/stamp-copyright.mjs",
     "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {

@@ -14,6 +14,7 @@
 import { readdir, mkdir, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { exifIfd0, xmpPacket } from "./copyright.mjs";
 
 const SOURCES = new URL("../../pin-images/", import.meta.url);
 const OUT = new URL("../public/pins/", import.meta.url);
@@ -42,9 +43,13 @@ for (const slug of slugs) {
   }
 
   const out = new URL(`${slug}.webp`, OUT);
+  // These are the copies the site serves, so they are the ones most likely to
+  // be downloaded and re-shared — the ownership notice rides along with them.
   const { size } = await sharp(fileURLToPath(source))
     .resize(SIZE, SIZE, { fit: "inside", withoutEnlargement: true })
     .webp({ nearLossless: true, quality: 60, effort: 6 })
+    .withExif(exifIfd0())
+    .withXmp(xmpPacket(`ParkPass — ${slug}`))
     .toFile(fileURLToPath(out));
 
   written += 1;

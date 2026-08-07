@@ -37,6 +37,12 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    // Asserts authorship on every page, and puts the notice where scrapers
+    // and "who made this?" tooling look first.
+    authors: [{ name: "Oleksii Hopchenko", url: "https://github.com/Hopchenko" }],
+    creator: "Oleksii Hopchenko",
+    publisher: "Oleksii Hopchenko",
+    other: { copyright: "© 2026 Oleksii Hopchenko. All rights reserved." },
     icons: { apple: "/icons/icon-180.png" },
     openGraph: {
       title,

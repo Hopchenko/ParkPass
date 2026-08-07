@@ -107,6 +107,16 @@ Accounts are no longer on the critical path — transfer codes cover cross-devic
 
 Next up: visit notes, achievements, real per-park pin artwork, and the mobile app.
 
+## Copyright
+
+**© 2026 Oleksii Hopchenko. All rights reserved.**
+
+This is source-visible, not open source. The code, the enamel-pin artwork and the design assets may not be copied, modified, redistributed, or used as machine-learning training data without prior written permission — see [LICENSE](LICENSE) for the full terms and for the third-party material it excludes.
+
+The pin artwork carries embedded XMP and EXIF ownership metadata, so a downloaded file still identifies its author. `npm run stamp:copyright` re-applies it losslessly after new artwork is added, and `npm run build:pins` bakes it into the WebP files the site serves.
+
+To request permission for any use, reach me via [github.com/Hopchenko](https://github.com/Hopchenko).
+
 ## Credits
 
-Park data summarised from [sverigesnationalparker.se](https://www.sverigesnationalparker.se). Icons by [Lucide](https://lucide.dev). Fonts: Caprasimo and Figtree.
+Park data summarised from [sverigesnationalparker.se](https://www.sverigesnationalparker.se) — ParkPass is unofficial and not affiliated with Naturvårdsverket. Icons by [Lucide](https://lucide.dev) (ISC). Fonts: Caprasimo and Figtree (SIL OFL 1.1).

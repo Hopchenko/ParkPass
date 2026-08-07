@@ -1,0 +1,63 @@
+ParkPass
+
+Copyright © 2026 Oleksii Hopchenko. All rights reserved.
+
+
+TERMS
+
+This repository — including its source code, its enamel-pin artwork, its
+design assets, and its written content — is the exclusive property of
+Oleksii Hopchenko and is protected by copyright law.
+
+No permission is granted to any person or organisation to copy, modify,
+adapt, translate, merge, publish, distribute, sublicense, sell, or create
+derivative works from any part of this repository, in whole or in part, by
+any means, without the prior written permission of the copyright holder.
+
+This applies in particular to the enamel-pin artwork and the visual design,
+which are original creative works and not incidental to the software.
+
+No permission is granted to use any part of this repository as training
+data for machine-learning or generative models.
+
+Viewing this repository, and any fork created through GitHub's own
+interface as permitted by the GitHub Terms of Service, does not grant any
+of the rights withheld above.
+
+THE SOFTWARE AND ARTWORK ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+
+THIRD-PARTY MATERIAL
+
+The following are not owned by the copyright holder, are not covered by the
+terms above, and remain subject to the licenses of their respective owners:
+
+  Lucide icons
+    The glyph path data in parkpass-web/src/data/parks.ts and the interface
+    icons drawn from the same set are © Lucide Contributors, used under the
+    ISC License. https://lucide.dev
+
+  Caprasimo and Figtree typefaces
+    Licensed under the SIL Open Font License 1.1. Loaded at build time via
+    next/font; the font files are not redistributed in this repository.
+
+  npm dependencies
+    Each remains under its own license. Dependencies are not vendored into
+    this repository.
+
+  Swedish national park information
+    Factual details — park names, areas, founding years and locations — are
+    facts and not subject to copyright. The descriptive text was paraphrased
+    from sverigesnationalparker.se; rights in the original wording remain
+    with Naturvårdsverket. ParkPass is an unofficial project with no
+    affiliation to, or endorsement by, Naturvårdsverket.
+
+
+PERMISSIONS
+
+To request permission for any use of this work, contact the copyright
+holder through https://github.com/Hopchenko
