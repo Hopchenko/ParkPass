@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Swedish (default). Keys mirror parkpass-web/messages/sv.json as group_key.
+     Change a string there and here together — docs/specs/i18n.md. -->
+<resources>
+    <string name="app_name" translatable="false">ParkPass</string>
+    <!-- Which catalogue resolved; drives park-data language so text never mixes. -->
+    <string name="lang_tag">sv</string>
+
+    <string name="tabs_parks">Parker</string>
+    <string name="tabs_map">Karta</string>
+    <string name="tabs_board">Nålbrädan</string>
+    <string name="tabs_you">Du</string>
+
+    <string name="map_title">Karta</string>
+    <string name="map_count">%1$d / 31</string>
+    <string name="map_mapLabel">Karta som visar var nationalparkerna är placerade i Sverige</string>
+    <string name="map_legendVisited">Nålade</string>
+    <string name="map_legendTodo">Inte än</string>
+
+    <string name="parks_title">ParkPass</string>
+    <string name="parks_subtitle">Svenska nationalparker</string>
+    <string name="parks_pinnedCount">%1$d / 31 nålade</string>
+    <string name="parks_searchPlaceholder">Sök park eller landskap…</string>
+    <string name="parks_chipAll">Alla 31</string>
+    <string name="parks_chipPinned">Nålade</string>
+    <string name="parks_chipTodo">Inte än</string>
+    <string name="parks_meta">%1$s · Grundad %2$s · %3$s km²</string>
+    <string name="parks_noResults">Inga parker matchar — prova \"Lappland\" eller \"Skåne\".</string>
+
+    <string name="detail_est">Grundad %1$s</string>
+    <string name="detail_area">%1$s km²</string>
+    <string name="detail_pinIt">Jag har varit här — nåla fast!</string>
+    <string name="detail_pinned">Nålad %1$s</string>
+    <string name="detail_undo">Ångra</string>
+    <string name="detail_stampVisited">BESÖKT</string>
+    <string name="detail_stampAlt">Stämpel: besökt %1$s</string>
+    <string name="detail_official">Planera din tur på officiella webbplatsen ↗</string>
+    <string name="detail_disclaimer">Inofficiell tjänst — ej kopplad till Naturvårdsverket.</string>
+
+    <string name="board_title">Nålbrädan</string>
+    <string name="board_count">%1$d / 31</string>
+
+    <string name="you_title">Din expedition</string>
+    <string name="you_of31">/ 31 parker nålade</string>
+    <plurals name="you_toGo">
+        <item quantity="one">%1$d park kvar — diplomet väntar.</item>
+        <item quantity="other">%1$d parker kvar — diplomet väntar.</item>
+    </plurals>
+    <string name="you_done">Alla 31! Dags att hämta diplomet. 🎉</string>
+    <string name="you_diplomaTitle">Diplomet väntar 🏅</string>
+    <string name="you_diplomaBody">Besök alla 31 så skickar Naturvårdsverket ett diplom signerat av generaldirektören. På riktigt.</string>
+    <string name="you_diplomaLink">Om den officiella krysslistan ↗</string>
+    <string name="you_transferTitle">Flytta dina nålar</string>
+    <string name="you_transferBody">Inget konto, inget moln. Hela nålbrädan ryms i en kod — klistra in den på en annan enhet så följer nålarna med, datum och allt.</string>
+    <string name="you_yourCode">Din kod</string>
+    <string name="you_copy">Kopiera koden</string>
+    <string name="you_copied">Kopierad ✓</string>
+    <string name="you_copyFailed">Kom inte åt urklipp — markera koden ovan och kopiera den för hand.</string>
+    <string name="you_noCode">Nåla din första park så dyker koden upp här.</string>
+    <string name="you_importLabel">Klistra in en kod</string>
+    <string name="you_importPlaceholder">PARKPASS-…</string>
+    <string name="you_import">Importera nålar</string>
+    <plurals name="you_importedPins">
+        <item quantity="one">%1$d nål tillagd.</item>
+        <item quantity="other">%1$d nålar tillagda.</item>
+    </plurals>
+    <plurals name="you_importedDates">
+        <item quantity="one">%1$d besöksdatum flyttades tidigare.</item>
+        <item quantity="other">%1$d besöksdatum flyttades tidigare.</item>
+    </plurals>
+    <string name="you_importedNothing">Inget nytt — de nålarna finns redan på den här enheten.</string>
+    <string name="you_errorEmpty">Klistra in en kod först.</string>
+    <string name="you_errorCharset">Det där ser inte ut som en ParkPass-kod.</string>
+    <string name="you_errorLength">Koden är avklippt — klistra in hela.</string>
+    <string name="you_errorChecksum">Koden innehåller ett skrivfel. Kontrollera den och försök igen.</string>
+    <string name="you_errorVersion">Koden kommer från en nyare ParkPass. Uppdatera den här enheten först.</string>
+    <string name="you_honor">Inofficiell tjänst · Besök på hedersord 🤝</string>
+    <string name="you_language">Språk</string>
+
+    <!-- Native-only additions (docs/specs/native-platforms.md). -->
+    <string name="you_share">Dela koden</string>
+    <string name="you_shareTitle">Min ParkPass-kod</string>
+    <string name="you_paste">Klistra in</string>
+    <string name="you_version">Version %1$s</string>
+</resources>

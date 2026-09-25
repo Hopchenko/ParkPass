@@ -1,0 +1,68 @@
+name: Android
+
+on:
+  push:
+    paths:
+      - "android/**"
+      - "shared/**"
+      - "parkpass-web/src/data/**"
+      - "parkpass-web/src/lib/passcode.ts"
+      - "parkpass-web/public/pins/**"
+      - "parkpass-web/public/pinboard-fabric-seamless.webp"
+      - "parkpass-web/scripts/export-shared.mjs"
+      - ".github/workflows/android.yml"
+  pull_request:
+    paths:
+      - "android/**"
+      - "shared/**"
+      - "parkpass-web/src/data/**"
+      - "parkpass-web/src/lib/passcode.ts"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+jobs:
+  shared-data:
+    name: shared/ matches the web app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The export imports parks.ts, mapHexes.ts and passcode.ts directly and
+      # needs no npm dependencies.
+      - run: npm run export:shared
+        working-directory: parkpass-web
+      - name: Fail if shared/ is stale
+        run: |
+          if ! git diff --exit-code shared/; then
+            echo "::error::shared/ is out of date. Run 'npm run export:shared' in parkpass-web/ and commit the result."
+            exit 1
+          fi
+
+  build:
+    name: Test core + build debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Unit tests (transfer codes vs web vectors, data, merge)
+        run: ./gradlew :core:test --stacktrace
+        working-directory: android
+      - name: Assemble debug APK
+        run: ./gradlew :app:assembleDebug --stacktrace
+        working-directory: android
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parkpass-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-reports
+          path: android/core/build/reports/tests/

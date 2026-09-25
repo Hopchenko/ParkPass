@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English. Keys mirror parkpass-web/messages/en.json as group_key. -->
+<resources>
+    <string name="lang_tag">en</string>
+
+    <string name="tabs_parks">Parks</string>
+    <string name="tabs_map">Map</string>
+    <string name="tabs_board">Pin board</string>
+    <string name="tabs_you">You</string>
+
+    <string name="map_title">Map</string>
+    <string name="map_count">%1$d / 31</string>
+    <string name="map_mapLabel">Map showing where the national parks are located in Sweden</string>
+    <string name="map_legendVisited">Pinned</string>
+    <string name="map_legendTodo">Not yet</string>
+
+    <string name="parks_title">ParkPass</string>
+    <string name="parks_subtitle">Swedish national parks</string>
+    <string name="parks_pinnedCount">%1$d / 31 pinned</string>
+    <string name="parks_searchPlaceholder">Search parks or regions…</string>
+    <string name="parks_chipAll">All 31</string>
+    <string name="parks_chipPinned">Pinned</string>
+    <string name="parks_chipTodo">Not yet</string>
+    <string name="parks_meta">%1$s · Est. %2$s · %3$s km²</string>
+    <string name="parks_noResults">No parks match — try \"Lapland\" or \"Skåne\".</string>
+
+    <string name="detail_est">Est. %1$s</string>
+    <string name="detail_area">%1$s km²</string>
+    <string name="detail_pinIt">I\'ve been here — pin it!</string>
+    <string name="detail_pinned">Pinned %1$s</string>
+    <string name="detail_undo">Undo</string>
+    <string name="detail_stampVisited">VISITED</string>
+    <string name="detail_stampAlt">Stamp: visited %1$s</string>
+    <string name="detail_official">Plan a trip on the official site ↗</string>
+    <string name="detail_disclaimer">Unofficial tracker — not affiliated with Naturvårdsverket.</string>
+
+    <string name="board_title">Pin board</string>
+    <string name="board_count">%1$d / 31</string>
+
+    <string name="you_title">Your expedition</string>
+    <string name="you_of31">/ 31 parks pinned</string>
+    <plurals name="you_toGo">
+        <item quantity="one">%1$d park to go — the diploma is waiting.</item>
+        <item quantity="other">%1$d parks to go — the diploma is waiting.</item>
+    </plurals>
+    <string name="you_done">All 31! Time to claim that diploma. 🎉</string>
+    <string name="you_diplomaTitle">The diploma awaits 🏅</string>
+    <string name="you_diplomaBody">Visit all 31 and Naturvårdsverket will send you a diploma signed by the Director General. Really.</string>
+    <string name="you_diplomaLink">About the official checklist ↗</string>
+    <string name="you_transferTitle">Move your pins</string>
+    <string name="you_transferBody">No account, no cloud. Your board packs into one code — paste it on another device and the pins travel with you, dates and all.</string>
+    <string name="you_yourCode">Your code</string>
+    <string name="you_copy">Copy code</string>
+    <string name="you_copied">Copied ✓</string>
+    <string name="you_copyFailed">Couldn\'t reach the clipboard — select the code above and copy it by hand.</string>
+    <string name="you_noCode">Pin your first park and your code appears here.</string>
+    <string name="you_importLabel">Paste a code</string>
+    <string name="you_importPlaceholder">PARKPASS-…</string>
+    <string name="you_import">Import pins</string>
+    <plurals name="you_importedPins">
+        <item quantity="one">%1$d pin added.</item>
+        <item quantity="other">%1$d pins added.</item>
+    </plurals>
+    <plurals name="you_importedDates">
+        <item quantity="one">%1$d visit date moved earlier.</item>
+        <item quantity="other">%1$d visit dates moved earlier.</item>
+    </plurals>
+    <string name="you_importedNothing">Nothing new — this device already has those pins.</string>
+    <string name="you_errorEmpty">Paste a code first.</string>
+    <string name="you_errorCharset">That doesn\'t look like a ParkPass code.</string>
+    <string name="you_errorLength">That code is cut short — paste the whole thing.</string>
+    <string name="you_errorChecksum">That code has a typo in it. Check it and try again.</string>
+    <string name="you_errorVersion">That code came from a newer ParkPass. Update this device first.</string>
+    <string name="you_honor">Unofficial tracker · Visits are on your honor 🤝</string>
+    <string name="you_language">Language</string>
+
+    <string name="you_share">Share code</string>
+    <string name="you_shareTitle">My ParkPass code</string>
+    <string name="you_paste">Paste</string>
+    <string name="you_version">Version %1$s</string>
+</resources>

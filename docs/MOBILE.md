@@ -3,6 +3,26 @@
 Decision (2026-08-06): iOS and Android live in **this repo** when they happen.
 No separate repos per platform.
 
+## Update (2026-09-25): native, not Capacitor
+
+Stage 2 went **native** instead of the Capacitor path recommended below:
+Android is Kotlin + Jetpack Compose in [`android/`](../android/README.md), and
+iOS will be SwiftUI. Why the change:
+
+- The owner wants apps that feel native on the phone, not a wrapped site.
+- Apple Guideline 4.2 (below) stops being a risk for a real native app.
+- The expensive shared parts stayed shared without a WebView. The park data,
+  map geometry and transfer-code test vectors are exported from the web
+  sources into `shared/` (`npm run export:shared`), and the pin artwork is
+  copied into the build from `parkpass-web/public/`. Nothing is hand-copied.
+- To keep two or three UIs honest, every feature is written down in
+  [`docs/specs/`](specs/README.md), and the transfer-code codec is proven
+  bit-compatible by replaying vectors produced by the web codec.
+
+The rest of this document is kept as the decision history. The Capacitor
+notes still apply if a wrapper is ever wanted, for example for a quick iOS
+TestFlight.
+
 ## Why one repo
 
 Separate repos earn their overhead when teams, release cadences, or CI

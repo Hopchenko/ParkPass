@@ -2,7 +2,7 @@
 
 A checklist for Sweden's 31 national parks. Find a park, mark it visited, collect an enamel-pin badge for every one you've been to — and work your way toward the diploma Naturvårdsverket sends to anyone who visits all 31.
 
-Web app first, installable as a PWA today. See [docs/PLAN.md](docs/PLAN.md) for the full product plan and [docs/MOBILE.md](docs/MOBILE.md) for how iOS and Android get built (same repo, Capacitor, verified static-export path).
+Web app first, installable as a PWA today, with a native Android app in [`android/`](android/README.md). See [docs/PLAN.md](docs/PLAN.md) for the full product plan, [docs/MOBILE.md](docs/MOBILE.md) for the mobile decisions, and [docs/specs/](docs/specs/README.md) for platform-neutral specs of every feature, used to build the native apps.
 
 > **Unofficial project** — not affiliated with Naturvårdsverket or Sveriges Nationalparker. Park information is summarised from public sources and every park links out to its official page.
 
@@ -51,6 +51,8 @@ npm run lint         # eslint
 npm run check:links  # verify all 62 official park links (31 parks × sv/en) still resolve
 npm run build:pins   # rebuild public/pins/*.webp from the pin-images/ artwork
 npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
+npm run export:shared       # regenerate shared/*.json for the native apps
+npm run build:android-icon  # rebuild the Android launcher icon
 ```
 
 `build:pins` encodes near-lossless rather than lossy: the artwork's thin cream outlines sit on flat colour, and WebP's chroma subsampling greys them out at any lossy quality. Near-lossless still halves the pin board's page weight.
@@ -62,8 +64,11 @@ npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 ```
 ├── docs/
 │   ├── PLAN.md                # product plan: scope, roadmap, decisions
-│   ├── MOBILE.md              # how iOS/Android get built: Capacitor path + store notes
+│   ├── MOBILE.md              # mobile decisions: native apps, store notes, Capacitor history
+│   ├── specs/                 # platform-neutral feature specs (the porting reference)
 │   └── LOVABLE_PROMPT.md      # historical: the original rebuild prompt
+├── shared/                    # generated from the web sources for native apps: parks, map, code vectors
+├── android/                   # native Android app (Kotlin + Jetpack Compose)
 ├── design/
 │   ├── handoff/               # design reference: HTML prototype + design tokens
 │   ├── fabric/                # source + preview of the pin-board fabric
@@ -72,7 +77,7 @@ npm run build:icons  # rebuild PWA icons + og.png from the Abisko artwork
 ├── pin-images/                # pin artwork sources, one folder per park slug
 └── parkpass-web/              # the Next.js web app
     ├── messages/              # sv.json / en.json UI strings
-    ├── scripts/               # link checker, pin webp builder
+    ├── scripts/               # link checker, pin webp builder, shared/ export, icons
     └── src/
         ├── app/[locale]/      # routes: parks, map, board, you, park/[slug]
         ├── components/        # ParkList, ParkDetail, SwedenMap, PinBoard, Profile, TabBar

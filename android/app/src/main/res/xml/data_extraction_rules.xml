@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+: the pin board survives a reinstall or a new phone. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="sharedpref" path="parkpass.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="parkpass.xml" />
+    </device-transfer>
+</data-extraction-rules>
