@@ -14,7 +14,7 @@
     "stamp:copyright": "node scripts/stamp-copyright.mjs",
     "build:icons": "node scripts/build-icons.mjs",
     "export:shared": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/export-shared.mjs",
-    "build:android-icon": "node scripts/build-android-icon.mjs"
+    "build:icons:native": "node scripts/build-app-icons.mjs"
   },
   "dependencies": {
     "next": "16.2.11",

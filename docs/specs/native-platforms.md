@@ -51,13 +51,32 @@ Assets aren't duplicated. The Gradle build copies `shared/*.json`, the pin
 WebPs and the fabric texture from `parkpass-web/public/` into the APK at build
 time.
 
-## iOS notes (for later)
+## iOS implementation map
 
-- Build from these specs in SwiftUI. Parse the same `shared/*.json` files and
-  copy the same WebPs (iOS 14+ decodes WebP natively).
-- Port `Passcode.kt` line for line, and replay `shared/passcode-vectors.json`
-  in XCTest before touching any UI.
-- Plan for **App Store Guideline 4.2** (see `docs/MOBILE.md`). A native SwiftUI
-  app with haptics, the share sheet and offline storage clears it much more
-  easily than a web wrapper, and a home-screen widget ("12 / 31") would settle
-  it.
+The project is `ios/`: SwiftUI, iOS 17+, built with system components
+(TabView, NavigationStack), so iOS 26 renders its bars as Liquid Glass with no
+custom code.
+
+| Spec | Code |
+|---|---|
+| [data.md](data.md) | `ParkPassCore/…/Park.swift`, `MapData.swift`; `ParkPass/Data/ParkRepository.swift` |
+| [storage.md](storage.md) | `ParkPassCore/…/Visits.swift`, `ParkPass/Data/VisitStore.swift` (UserDefaults) |
+| [transfer-codes.md](transfer-codes.md) | `ParkPassCore/…/Passcode.swift`, tested against `shared/passcode-vectors.json` |
+| [navigation.md](navigation.md) | `ParkPass/ParkPassApp.swift` |
+| [park-list.md](park-list.md) | `ParkPass/Screens/ParkListView.swift` |
+| [park-detail.md](park-detail.md) | `ParkPass/Screens/ParkDetailView.swift`, `VisitStamp.swift`, `Confetti.swift` |
+| [map.md](map.md) | `ParkPass/Screens/SwedenMapView.swift` |
+| [pin-board.md](pin-board.md) | `ParkPass/Screens/PinBoardView.swift` |
+| [profile.md](profile.md) | `ParkPass/Screens/ProfileView.swift` |
+| [design-system.md](design-system.md) | `ParkPass/Theme/Theme.swift`, `ParkPass/Components/PinBadge.swift` |
+| [i18n.md](i18n.md) | `ParkPass/Data/L10n.swift` reads `parkpass-web/messages/*.json` directly; `ParkPassCore/…/Messages.swift` formats ICU |
+
+iOS deviations, all deliberate: SF Symbols replace the Lucide tab icons and
+placeholder glyphs, the system back button replaces the web's BackLink, and
+the web's string catalogue is read as-is instead of being copied.
+
+For the App Store, plan for **Guideline 4.2** (see `docs/MOBILE.md`). A native
+app with haptics, the share sheet and offline storage clears it much more
+easily than a web wrapper, and a home-screen widget ("12 / 31") would settle
+it. The privacy manifest (`PrivacyInfo.xcprivacy`) declares no data
+collection and the UserDefaults reason code CA92.1.

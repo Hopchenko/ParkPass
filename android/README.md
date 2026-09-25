@@ -76,7 +76,7 @@ No data is duplicated. At build time Gradle copies `shared/parks.json`,
   `parkpass-web/messages/*.json`.
 - **New pin artwork**: nothing to do. The build picks up
   `parkpass-web/public/pins/*.webp`.
-- **Launcher icon**: `npm run build:android-icon` in `parkpass-web/`.
+- **Launcher icon**: `npm run build:icons:native` in `parkpass-web/`.
 
 ## Native extras over the web app
 

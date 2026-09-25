@@ -7,7 +7,7 @@ No separate repos per platform.
 
 Stage 2 went **native** instead of the Capacitor path recommended below:
 Android is Kotlin + Jetpack Compose in [`android/`](../android/README.md), and
-iOS will be SwiftUI. Why the change:
+iOS is SwiftUI in [`ios/`](../ios/README.md). Why the change:
 
 - The owner wants apps that feel native on the phone, not a wrapped site.
 - Apple Guideline 4.2 (below) stops being a risk for a real native app.

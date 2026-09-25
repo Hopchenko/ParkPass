@@ -24,7 +24,7 @@ names the web source it was written from so the two can be re-checked.
 | [transfer-codes.md](transfer-codes.md) | **Bit-exact** transfer-code format — must match across platforms |
 | [design-system.md](design-system.md) | Colours, type, pin badge geometry, animation timings |
 | [i18n.md](i18n.md) | Languages, string keys, plurals, date and number formats |
-| [native-platforms.md](native-platforms.md) | What native apps add on top of the web (haptics, share, backup) and how Android maps each spec |
+| [native-platforms.md](native-platforms.md) | What native apps add on top of the web (haptics, share, backup) and where each spec lives in the Android and iOS code |
 
 ## Shared assets (don't copy — import)
 

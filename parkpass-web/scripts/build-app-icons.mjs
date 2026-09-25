@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 /**
- * Builds the Android adaptive launcher icon's foreground layer: the Abisko
- * artwork set into the same gold-rimmed hexagon the app draws for every pin
- * (docs/specs/design-system.md#pin-badge). The background layer is the ground
- * colour, defined in the app's resources.
+ * Builds the native app icons: the Abisko artwork set into the same
+ * gold-rimmed hexagon the apps draw for every pin
+ * (docs/specs/design-system.md#pin-badge), on the paper ground.
+ *
+ * Android: the adaptive icon's foreground layer; its background layer is the
+ * ground colour, defined in the app's resources.
+ * iOS: one flattened 1024px icon (the App Store rejects alpha); iOS applies
+ * its own rounded mask, so the hexagon keeps the same safe-zone sizing.
  *
  * Adaptive icons are 108dp with a 66dp safe zone that every launcher mask
  * (circle, squircle, teardrop) leaves visible, so the hexagon's circumradius
  * is sized to that zone. Written at xxxhdpi (4×) into drawable-nodpi, which
  * Android scales down for lower densities.
  *
- * Run: npm run build:android-icon
+ * Run: npm run build:icons:native
  */
 import { fileURLToPath } from "node:url";
 import { readFile } from "node:fs/promises";
@@ -20,6 +24,12 @@ const SOURCE = fileURLToPath(new URL("../../pin-images/abisko/final.png", import
 const OUT = fileURLToPath(
   new URL(
     "../../android/app/src/main/res/drawable-nodpi/ic_launcher_foreground.png",
+    import.meta.url,
+  ),
+);
+const IOS_OUT = fileURLToPath(
+  new URL(
+    "../../ios/ParkPass/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
     import.meta.url,
   ),
 );
@@ -57,5 +67,13 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
   <polygon points="${hex(ENAMEL_R)}" fill="none" stroke="#855d18" stroke-width="${(0.7 * RIM_R) / 30}"/>
 </svg>`;
 
-await sharp(Buffer.from(svg)).png().toFile(OUT);
+const foreground = await sharp(Buffer.from(svg)).png().toBuffer();
+await sharp(foreground).toFile(OUT);
 console.log(`wrote ${OUT}`);
+
+await sharp({ create: { width: 1024, height: 1024, channels: 3, background: "#f5ead8" } })
+  .composite([{ input: await sharp(foreground).resize(1024, 1024).toBuffer() }])
+  .removeAlpha()
+  .png()
+  .toFile(IOS_OUT);
+console.log(`wrote ${IOS_OUT}`);

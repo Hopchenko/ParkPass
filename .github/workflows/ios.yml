@@ -1,0 +1,42 @@
+name: iOS
+
+on:
+  push:
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "parkpass-web/messages/**"
+      - "parkpass-web/public/pins/**"
+      - "parkpass-web/public/pinboard-fabric-seamless.webp"
+      - ".github/workflows/ios.yml"
+  pull_request:
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "parkpass-web/messages/**"
+      - ".github/workflows/ios.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test core + build for Simulator
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -version
+      - name: Core tests (transfer codes vs web vectors, data, strings)
+        run: swift test --package-path ios/ParkPassCore
+      - name: Build app (Simulator, unsigned)
+        run: |
+          xcodebuild -project ios/ParkPass.xcodeproj -target ParkPass \
+            -sdk iphonesimulator -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO SYMROOT="$PWD/ios/build" build
+      - name: Check bundled data, strings, artwork and fonts
+        run: |
+          APP=ios/build/Debug-iphonesimulator/ParkPass.app
+          ls "$APP"
+          for f in parks.json map.json messages/sv.json messages/en.json pins/abisko.webp \
+                   pinboard-fabric-seamless.webp PrivacyInfo.xcprivacy; do
+            test -e "$APP/$f" || { echo "::error::missing $f in the app bundle"; exit 1; }
+          done
+          find "$APP" -name "*.ttf" | grep -q . || { echo "::error::fonts missing from the app bundle"; exit 1; }
