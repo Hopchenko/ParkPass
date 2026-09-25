@@ -12,7 +12,7 @@ import java.time.LocalDate
 /**
  * The pin board: slug → visit date, persisted in SharedPreferences as the
  * same JSON object the web app keeps in localStorage. The prefs file is
- * covered by Auto Backup (res/xml/*_rules.xml). See docs/specs/storage.md.
+ * covered by Auto Backup (see the rules in res/xml). See docs/specs/storage.md.
  */
 class VisitStore(context: Context) {
     private val prefs = context.applicationContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
