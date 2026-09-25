@@ -10,7 +10,7 @@ private let repo = URL(fileURLWithPath: #filePath)
     .deletingLastPathComponent() // ios
     .deletingLastPathComponent() // repo
 
-private func load(_ path: String) throws -> Data {
+private func fixture(_ path: String) throws -> Data {
     try Data(contentsOf: repo.appendingPathComponent(path))
 }
 
@@ -21,7 +21,7 @@ final class PasscodeTests: XCTestCase {
     private var vectors: [String: Any] = [:]
 
     override func setUpWithError() throws {
-        vectors = try JSONSerialization.jsonObject(with: load("shared/passcode-vectors.json")) as! [String: Any]
+        vectors = try JSONSerialization.jsonObject(with: fixture("shared/passcode-vectors.json")) as! [String: Any]
     }
 
     func testCodeOrderMatchesWeb() {
@@ -29,7 +29,7 @@ final class PasscodeTests: XCTestCase {
     }
 
     func testEveryParkHasACodeSlot() throws {
-        let parks = try ParkData.parse(load("shared/parks.json"))
+        let parks = try ParkData.parse(fixture("shared/parks.json"))
         XCTAssertEqual(Set(parks.map(\.slug)).subtracting(Passcode.codeOrder), [])
     }
 
@@ -71,12 +71,12 @@ final class PasscodeTests: XCTestCase {
 
 final class DataTests: XCTestCase {
     func testParsesAll31ParksAndTheMap() throws {
-        let parks = try ParkData.parse(load("shared/parks.json"))
+        let parks = try ParkData.parse(fixture("shared/parks.json"))
         XCTAssertEqual(parks.count, 31)
         XCTAssertEqual(parks.first { $0.slug == "muddus" }?.sami, "Muttos")
         XCTAssertEqual(parks.first { $0.slug == "garphyttan" }?.area, 1.1)
 
-        let map = try MapData.parse(load("shared/map.json"))
+        let map = try MapData.parse(fixture("shared/map.json"))
         XCTAssertEqual(Set(map.parks.map(\.slug)), Set(parks.map(\.slug)))
     }
 }
@@ -104,8 +104,8 @@ final class VisitsTests: XCTestCase {
 /// The formatter against the web's real catalogue, both languages.
 final class MessagesTests: XCTestCase {
     func testFormatsTheWebCatalogue() throws {
-        let sv = try Messages.flatten(load("parkpass-web/messages/sv.json"))
-        let en = try Messages.flatten(load("parkpass-web/messages/en.json"))
+        let sv = try Messages.flatten(fixture("parkpass-web/messages/sv.json"))
+        let en = try Messages.flatten(fixture("parkpass-web/messages/en.json"))
         XCTAssertEqual(Set(sv.keys), Set(en.keys))
 
         XCTAssertEqual(MessageFormat.format(en["you.toGo"]!, ["count": "1"]), "1 park to go — the diploma is waiting.")
