@@ -11,7 +11,16 @@ the website, and the other way round.
 
 ## Install on your phone (no Android Studio needed)
 
-Every push that touches the app builds a debug APK on GitHub Actions.
+**Quickest:** open this link on the phone, then tap Install:
+https://github.com/Hopchenko/ParkPass/releases/download/android-latest/ParkPass-debug.apk
+
+Every push that touches the app rebuilds it and replaces the **Android
+(latest test build)** pre-release, so the link always gets the newest build.
+The first time, Android asks you to allow installs from your browser (Samsung:
+Settings → Security and privacy → Install unknown apps → Chrome or Samsung
+Internet).
+
+The same APK is also attached to each Actions run:
 
 1. On GitHub, open **Actions → Android**, then the latest green run.
 2. Under **Artifacts**, download **parkpass-debug-apk**. It's a zip; unzip it
