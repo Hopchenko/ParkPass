@@ -12,7 +12,9 @@
     "check:links": "node scripts/check-official-links.mjs",
     "build:pins": "node scripts/pins-to-webp.mjs",
     "stamp:copyright": "node scripts/stamp-copyright.mjs",
-    "build:icons": "node scripts/build-icons.mjs"
+    "build:icons": "node scripts/build-icons.mjs",
+    "export:shared": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/export-shared.mjs",
+    "build:android-icon": "node scripts/build-android-icon.mjs"
   },
   "dependencies": {
     "next": "16.2.11",
